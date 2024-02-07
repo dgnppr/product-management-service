@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("checkstyle")
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
 }
@@ -13,6 +14,22 @@ allprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    tasks.compileTestJava {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.compileJava {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType<Checkstyle>().configureEach {
+        configFile = file(".style/google_checks.xml")
+    }
+
+    tasks.check {
+        dependsOn("checkstyleMain", "checkstyleTest")
     }
 }
 
