@@ -7,6 +7,7 @@ plugins {
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "checkstyle")
 
     group = "me.dgpr"
     version = "1.0.0-SNAPSHOT"
@@ -22,6 +23,12 @@ allprojects {
 
     tasks.compileJava {
         options.encoding = "UTF-8"
+    }
+
+    checkstyle {
+        maxWarnings = 0
+        configFile = file("${rootDir}/.style/google-styles.xml")
+        toolVersion = "10.13.0"
     }
 }
 
