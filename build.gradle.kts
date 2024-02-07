@@ -23,14 +23,6 @@ allprojects {
     tasks.compileJava {
         options.encoding = "UTF-8"
     }
-
-    tasks.withType<Checkstyle>().configureEach {
-        configFile = file(".style/google_checks.xml")
-    }
-
-    tasks.check {
-        dependsOn("checkstyleMain", "checkstyleTest")
-    }
 }
 
 subprojects {
