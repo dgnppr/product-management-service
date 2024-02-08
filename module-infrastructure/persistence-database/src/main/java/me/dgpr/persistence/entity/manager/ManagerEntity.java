@@ -28,7 +28,7 @@ public class ManagerEntity {
         this.password = password;
     }
 
-    public static ManagerEntity newManager(
+    public static ManagerEntity create(
             final String phoneNumber,
             final String password) {
         return new ManagerEntity(phoneNumber, password);

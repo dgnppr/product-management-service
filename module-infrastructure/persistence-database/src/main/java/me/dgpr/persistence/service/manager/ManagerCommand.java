@@ -21,7 +21,7 @@ public class ManagerCommand {
     }
 
     private ManagerEntity createNewManager(final CreateManager command) {
-        ManagerEntity newManager = ManagerEntity.newManager(
+        ManagerEntity newManager = ManagerEntity.create(
                 command.phoneNumber(),
                 command.password()
         );

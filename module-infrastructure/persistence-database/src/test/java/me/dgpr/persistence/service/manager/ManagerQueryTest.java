@@ -32,7 +32,7 @@ class ManagerQueryTest {
         Long managerId = 1L;
         String phoneNumber = "01011112222";
         String password = "password";
-        ManagerEntity manager = ManagerEntity.newManager(phoneNumber, password);
+        ManagerEntity manager = ManagerEntity.create(phoneNumber, password);
 
         when(managerRepository.findById(managerId))
                 .thenReturn(Optional.of(manager));
@@ -50,7 +50,7 @@ class ManagerQueryTest {
         //Arrange
         String phoneNumber = "01011112222";
         String password = "password";
-        ManagerEntity manager = ManagerEntity.newManager(phoneNumber, password);
+        ManagerEntity manager = ManagerEntity.create(phoneNumber, password);
 
         when(managerRepository.findByPhoneNumber(phoneNumber))
                 .thenReturn(Optional.of(manager));
