@@ -29,10 +29,10 @@ class ManagerQueryTest {
     @Test
     void id를_이용해_엔티티_조회_성공_시_엔티티_응답() {
         //Arrange
-        Long managerId = 1L;
-        String phoneNumber = "01011112222";
-        String password = "password";
-        ManagerEntity manager = ManagerEntity.create(phoneNumber, password);
+        var managerId = 1L;
+        var phoneNumber = "01011112222";
+        var password = "password";
+        var manager = ManagerEntity.create(phoneNumber, password);
 
         when(managerRepository.findById(managerId))
                 .thenReturn(Optional.of(manager));
@@ -48,9 +48,9 @@ class ManagerQueryTest {
     @Test
     void 휴대폰_번호를_이용해_엔티티_조회_성공_시_엔티티_응답() {
         //Arrange
-        String phoneNumber = "01011112222";
-        String password = "password";
-        ManagerEntity manager = ManagerEntity.create(phoneNumber, password);
+        var phoneNumber = "01011112222";
+        var password = "password";
+        var manager = ManagerEntity.create(phoneNumber, password);
 
         when(managerRepository.findByPhoneNumber(phoneNumber))
                 .thenReturn(Optional.of(manager));
@@ -66,7 +66,7 @@ class ManagerQueryTest {
     @Test
     void id를_이용해_엔티티_조회_실패_시_NotFoundManagerException_예외_발생한다() {
         //Arrange
-        long notExistingManagerId = -1L;
+        var notExistingManagerId = -1L;
         when(managerRepository.findById(notExistingManagerId))
                 .thenReturn(Optional.empty());
 
@@ -80,7 +80,7 @@ class ManagerQueryTest {
     @Test
     void 휴대폰_번호를_이용해_엔티티_조회_실패_시_NotFoundManagerException_예외_발생한다() {
         //Arrange
-        String notExistingPhoneNumber = "01011112222";
+        var notExistingPhoneNumber = "01011112222";
         when(managerRepository.findByPhoneNumber(notExistingPhoneNumber))
                 .thenReturn(Optional.empty());
 

@@ -24,7 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -39,8 +38,8 @@ class ProductQueryTest {
     @Test
     void id를_이용해_엔티티_조회_성공_시_엔티티_응답한다() {
         //Arrange
-        long productId = 1L;
-        ProductEntity product = ProductEntity.create(
+        var productId = 1L;
+        var product = ProductEntity.create(
                 1L,
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(50),
@@ -69,7 +68,7 @@ class ProductQueryTest {
     @Test
     void id를_이용해_엔티티_조회_실패_시_NotFoundProductException_예외가_발생한다() {
         //Arrange
-        long notExistingProductId = 1L;
+        var notExistingProductId = 1L;
         when(productRepository.findById(notExistingProductId))
                 .thenReturn(Optional.empty());
 
@@ -83,13 +82,13 @@ class ProductQueryTest {
     @Test
     void 페이지_요청에_따라_엔티티_목록을_페이징하여_응답한다() {
         //Arrange
-        int totalElements = 100;
-        int pageNumber = 0;
-        int pageSize = 10;
+        var totalElements = 100;
+        var pageNumber = 0;
+        var pageSize = 10;
 
-        List<ProductEntity> products = createProducts(totalElements);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<ProductEntity> expected = new PageImpl<>(products, pageable, products.size());
+        var products = createProducts(totalElements);
+        var pageable = PageRequest.of(pageNumber, pageSize);
+        var expected = new PageImpl<>(products, pageable, products.size());
 
         when(productRepository.findAll(pageable))
                 .thenReturn(expected);
@@ -107,15 +106,15 @@ class ProductQueryTest {
     @Test
     void 이름으로_상품_검색_성공_시_페이징된_결과를_응답한다() {
         // Arrange
-        int totalElements = 5; // 검색 결과로 예상되는 상품의 총 개수
-        int pageNumber = 0;
-        int pageSize = 2;
+        var totalElements = 5; // 검색 결과로 예상되는 상품의 총 개수
+        var pageNumber = 0;
+        var pageSize = 2;
 
-        String searchName = "Test Product";
+        var searchName = "Test Product";
 
-        List<ProductEntity> products = createProducts(totalElements);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<ProductEntity> expected = new PageImpl<>(products, pageable, totalElements);
+        var products = createProducts(totalElements);
+        var pageable = PageRequest.of(pageNumber, pageSize);
+        var expected = new PageImpl<>(products, pageable, totalElements);
 
         when(productRepository.findByNameContaining(searchName, pageable))
                 .thenReturn(expected);

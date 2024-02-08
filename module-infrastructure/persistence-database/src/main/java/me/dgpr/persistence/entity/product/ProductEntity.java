@@ -24,21 +24,13 @@ public class ProductEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
-
     private long storeId;
-
     private BigDecimal price;
-
     private BigDecimal cost;
-
     private String name;
-
     private String description;
-
     private String barcode;
-
     private LocalDateTime expirationDate;
-
     @Enumerated(EnumType.STRING)
     private ProductSize size;
 

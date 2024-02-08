@@ -16,32 +16,33 @@ public class StoreEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
     private Long id;
-
-    private String companyRegistrationNumber;
-
-    private String businessName;
-
     private long managerId;
+    private String companyRegistrationNumber;
+    private String businessName;
 
     protected StoreEntity() {
     }
 
     private StoreEntity(
+            final Long managerId,
             final String companyRegistrationNumber,
-            final String businessName,
-            final Long managerId
+            final String businessName
     ) {
+        this.managerId = managerId;
         this.companyRegistrationNumber = companyRegistrationNumber;
         this.businessName = businessName;
-        this.managerId = managerId;
     }
 
     public static StoreEntity create(
+            final Long managerId,
             final String companyRegistrationNumber,
-            final String storeName,
-            final Long managerId
+            final String storeName
     ) {
-        return new StoreEntity(companyRegistrationNumber, storeName, managerId);
+        return new StoreEntity(
+                managerId,
+                companyRegistrationNumber,
+                storeName
+        );
     }
 
     public Long getId() {

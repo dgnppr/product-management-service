@@ -38,7 +38,7 @@ class CategoryCommandTest {
     @Test
     void 존재하지_않는_가게_아이디로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
         //Arrange
-        long notExistingStoreId = -1L;
+        var notExistingStoreId = -1L;
 
         when(storeRepository.findById(eq(notExistingStoreId)))
                 .thenReturn(Optional.empty());
@@ -58,13 +58,13 @@ class CategoryCommandTest {
     @Test
     void 가게_아이디_카테고리_이름으로_새로운_Category_엔티티를_생성할_수_있다() {
         //Arrange
-        long storeId = 1L;
-        String categoryName = "name";
+        var storeId = 1L;
+        var categoryName = "name";
 
         when(storeRepository.findById(eq(storeId)))
                 .thenReturn(Optional.of(mock(StoreEntity.class)));
 
-        CategoryEntity expected = CategoryEntity.create(
+        var expected = CategoryEntity.create(
                 storeId,
                 categoryName
         );
@@ -72,7 +72,7 @@ class CategoryCommandTest {
         when(categoryRepository.save(any()))
                 .thenReturn(expected);
 
-        CreateCategory command = new CreateCategory(
+        var command = new CreateCategory(
                 storeId,
                 categoryName
         );

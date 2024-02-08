@@ -29,11 +29,11 @@ class StoreCommandTest {
     @Test
     void 사업자_등록_번호_상호명_매니저_아이디로_새로운_Store_엔티티를_생성할_수_있다() {
         //Arrange
-        String companyRegistrationNumber = "1234567890";
-        String storeName = "storeName";
-        long managerId = 1L;
+        var companyRegistrationNumber = "1234567890";
+        var storeName = "storeName";
+        var managerId = 1L;
 
-        CreateStore command = new CreateStore(companyRegistrationNumber, storeName, managerId);
+        var command = new CreateStore(companyRegistrationNumber, storeName, managerId);
 
         when(storeRepository.save(any()))
                 .then(returnsFirstArg());

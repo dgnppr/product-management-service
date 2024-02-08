@@ -16,9 +16,7 @@ public class ManagerEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "manager_id")
     private Long id;
-
     private String phoneNumber;
-
     private String password;
 
     protected ManagerEntity() {
