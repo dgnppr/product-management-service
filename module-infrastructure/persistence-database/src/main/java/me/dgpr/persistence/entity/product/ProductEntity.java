@@ -53,7 +53,8 @@ public class ProductEntity extends BaseEntity {
             final String description,
             final String barcode,
             final LocalDateTime expirationDate,
-            final ProductSize size) {
+            final ProductSize size
+    ) {
         this.storeId = storeId;
         this.price = price;
         this.cost = cost;
@@ -72,8 +73,8 @@ public class ProductEntity extends BaseEntity {
             final String description,
             final String barcode,
             final LocalDateTime expirationDate,
-            final ProductSize size) {
-
+            final ProductSize size
+    ) {
         return new ProductEntity(
                 storeId,
                 price,
@@ -93,7 +94,8 @@ public class ProductEntity extends BaseEntity {
             String description,
             String barcode,
             LocalDateTime expirationDate,
-            ProductSize size) {
+            ProductSize size
+    ) {
         this.price = price;
         this.cost = cost;
         this.name = name;

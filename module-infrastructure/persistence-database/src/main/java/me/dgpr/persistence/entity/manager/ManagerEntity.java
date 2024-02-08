@@ -24,7 +24,10 @@ public class ManagerEntity extends BaseEntity {
     protected ManagerEntity() {
     }
 
-    private ManagerEntity(final String phoneNumber, final String password) {
+    private ManagerEntity(
+            final String phoneNumber,
+            final String password
+    ) {
         this.phoneNumber = phoneNumber;
         this.password = password;
     }

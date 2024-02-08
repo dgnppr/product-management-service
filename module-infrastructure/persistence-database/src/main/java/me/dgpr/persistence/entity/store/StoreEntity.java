@@ -29,7 +29,8 @@ public class StoreEntity extends BaseEntity {
     private StoreEntity(
             final String companyRegistrationNumber,
             final String businessName,
-            final Long managerId) {
+            final Long managerId
+    ) {
         this.companyRegistrationNumber = companyRegistrationNumber;
         this.businessName = businessName;
         this.managerId = managerId;
@@ -38,7 +39,8 @@ public class StoreEntity extends BaseEntity {
     public static StoreEntity create(
             final String companyRegistrationNumber,
             final String storeName,
-            final Long managerId) {
+            final Long managerId
+    ) {
         return new StoreEntity(companyRegistrationNumber, storeName, managerId);
     }
 
