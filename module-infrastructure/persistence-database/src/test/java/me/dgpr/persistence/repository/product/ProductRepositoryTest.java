@@ -58,7 +58,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    void 소프트_삭제를_하면_deletedAt_필드가_활성화_된다() {
+    void 삭제를_하면_deletedAt_필드가_활성화_된다() {
         //Arrange
         ProductEntity product = sut.save(createEntity("Test Product"));
 
