@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
+import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.ProductCommand.CreateProduct;
@@ -55,6 +57,9 @@ class ProductCommandTest {
     void 가게_아이디_가격_원가_이름_설명_바코드_유통기한_사이즈로_새로운_Product_엔티티를_생성할_수_있다() {
         //Arrange
         CreateProduct command = createCommand();
+
+        when(storeRepository.findById(any()))
+                .thenReturn(Optional.of(mock(StoreEntity.class)));
 
         when(productRepository.save(any()))
                 .then(returnsFirstArg());
