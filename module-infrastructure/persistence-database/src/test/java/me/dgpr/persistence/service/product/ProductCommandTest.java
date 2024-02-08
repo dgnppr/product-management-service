@@ -56,7 +56,7 @@ class ProductCommandTest {
     @Test
     void 가게_아이디_가격_원가_이름_설명_바코드_유통기한_사이즈로_새로운_Product_엔티티를_생성할_수_있다() {
         //Arrange
-        CreateProduct command = createCommand();
+        var command = createCommand();
 
         when(storeRepository.findById(any()))
                 .thenReturn(Optional.of(mock(StoreEntity.class)));
@@ -80,8 +80,8 @@ class ProductCommandTest {
     @Test
     void 가격_원가_이름_설명_바코드_유통기한_사이즈로_기존_Product_엔티티를_속성_일부를_수정할_수_있다() {
         //Arrange
-        long productId = 1L;
-        ProductEntity product = createEntity();
+        var productId = 1L;
+        var product = createEntity();
 
         when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));

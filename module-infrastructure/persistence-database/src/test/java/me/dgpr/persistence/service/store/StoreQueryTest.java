@@ -29,16 +29,16 @@ class StoreQueryTest {
     @Test
     void id를_이용해_엔티티_조회_성공_시_엔티티_응답한다() {
         //Arrange
-        String companyRegistrationNumber = "1234567890";
-        String storeName = "storeName";
-        long managerId = 1L;
-        StoreEntity storeEntity = StoreEntity.create(
+        var companyRegistrationNumber = "1234567890";
+        var storeName = "storeName";
+        var managerId = 1L;
+        var storeEntity = StoreEntity.create(
                 managerId,
                 companyRegistrationNumber,
                 storeName
         );
 
-        long storeId = 1L;
+        var storeId = 1L;
 
         when(storeRepository.findById(storeId))
                 .thenReturn(Optional.of(storeEntity));

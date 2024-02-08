@@ -32,10 +32,10 @@ class ManagerCommandTest {
     @Test
     void 저장된_휴대폰_번호가_있으면_매니저_엔티티를_생성하지_않고_반환한다() {
         //Arrange
-        String number = "01011112222";
-        String password = "password";
-        CreateManager createManager = new CreateManager(number, password);
-        ManagerEntity manager = ManagerEntity.create(number, password);
+        var number = "01011112222";
+        var password = "password";
+        var createManager = new CreateManager(number, password);
+        var manager = ManagerEntity.create(number, password);
 
         when(managerRepository.findByPhoneNumber(number))
                 .thenReturn(Optional.of(manager));
@@ -52,9 +52,9 @@ class ManagerCommandTest {
     @Test
     void 저장되지_않은_휴대폰_번호로_새로운_매니저_엔티티를_생성할_수_있다() {
         //Arrange
-        String number = "01011112222";
-        String password = "password";
-        CreateManager createManager = new CreateManager(number, password);
+        var number = "01011112222";
+        var password = "password";
+        var createManager = new CreateManager(number, password);
 
         when(managerRepository.findByPhoneNumber(number))
                 .thenReturn(Optional.empty());
