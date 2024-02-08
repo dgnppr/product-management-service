@@ -6,10 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import me.dgpr.persistence.config.BaseEntity;
 
 @Entity
 @Table(name = "manager")
-public class ManagerEntity {
+public class ManagerEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
