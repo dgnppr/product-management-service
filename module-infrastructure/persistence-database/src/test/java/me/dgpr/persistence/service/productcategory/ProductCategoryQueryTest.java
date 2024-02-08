@@ -27,7 +27,7 @@ class ProductCategoryQueryTest {
     private ProductCategoryQuery sut;
 
     @Test
-    void 상품_id를_이용해_엔티티_리스트를_조회하여_반환한다() {
+    void 상품_id를_이용해_상품_카테고리_리스트를_조회하여_반환한다() {
         //Arrange
         var productId = 1L;
 

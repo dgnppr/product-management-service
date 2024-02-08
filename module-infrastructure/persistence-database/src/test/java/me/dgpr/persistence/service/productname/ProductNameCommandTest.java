@@ -88,7 +88,7 @@ class ProductNameCommandTest {
     }
 
     @Test
-    void 상품_id를_사용하여_ProductNameEntityList를_삭제할_수_있다() {
+    void 상품_id를_사용하여_ProductNameEntity를_삭제할_수_있다() {
         //Arrange
         var productId = 1L;
 

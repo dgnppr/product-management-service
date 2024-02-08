@@ -56,7 +56,7 @@ class CategoryCommandTest {
     }
 
     @Test
-    void 가게_id_카테고리_이름으로_새로운_Category_엔티티를_생성할_수_있다() {
+    void 가게_id와_카테고리_이름으로_새로운_Category_엔티티를_생성할_수_있다() {
         //Arrange
         var storeId = 1L;
         var categoryName = "name";
