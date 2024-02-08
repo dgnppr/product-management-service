@@ -19,6 +19,7 @@ import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.ProductCommand.CreateProduct;
 import me.dgpr.persistence.service.product.ProductCommand.UpdateProduct;
 import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
+import me.dgpr.persistence.utils.Money;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -113,8 +114,8 @@ class ProductCommandTest {
     private CreateProduct createCommand() {
         return new CreateProduct(
                 1L,
-                BigDecimal.valueOf(100),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 "Test Product",
                 "This is a test product",
                 "123456789",
@@ -124,8 +125,8 @@ class ProductCommandTest {
 
     private UpdateProduct updateCommand() {
         return new UpdateProduct(
-                BigDecimal.valueOf(150),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 "Updated Product",
                 "This is updated product",
                 "987654321",
@@ -136,8 +137,8 @@ class ProductCommandTest {
     private ProductEntity createEntity() {
         return ProductEntity.create(
                 1L,
-                BigDecimal.valueOf(100),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 "Test Product",
                 "This is a test product",
                 "123456789",

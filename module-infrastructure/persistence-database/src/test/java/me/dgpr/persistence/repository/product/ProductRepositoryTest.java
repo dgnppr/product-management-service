@@ -8,6 +8,7 @@ import java.util.Optional;
 import me.dgpr.persistence.config.JpaConfiguration;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
+import me.dgpr.persistence.utils.Money;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -36,8 +37,8 @@ class ProductRepositoryTest {
     private ProductEntity createEntity(String productName) {
         return ProductEntity.create(
                 1L,
-                BigDecimal.valueOf(100),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 productName,
                 "This is a test product",
                 "123456789",

@@ -12,6 +12,7 @@ import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
+import me.dgpr.persistence.utils.Money;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -111,8 +112,8 @@ class ProductNameRepositoryTest {
     ) {
         return ProductEntity.create(
                 storeId,
-                BigDecimal.valueOf(100),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 productName,
                 "This is a test product",
                 "123456789",

@@ -1,6 +1,5 @@
 package me.dgpr.persistence.service.product;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
@@ -8,6 +7,7 @@ import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
+import me.dgpr.persistence.utils.Money;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,8 +70,8 @@ public class ProductCommand {
 
     public record CreateProduct(
             long storeId,
-            BigDecimal price,
-            BigDecimal cost,
+            Money price,
+            Money cost,
             String name,
             String description,
             String barcode,
@@ -82,8 +82,8 @@ public class ProductCommand {
     }
 
     public record UpdateProduct(
-            BigDecimal price,
-            BigDecimal cost,
+            Money price,
+            Money cost,
             String name,
             String description,
             String barcode,
