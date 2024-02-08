@@ -57,7 +57,7 @@ class ProductNameCommandTest {
     }
 
     @Test
-    void 상품_아이디와_상품_이름을_쪼개어서_매핑하여_새로운_ProductName_엔티티를_생성할_수_있다() {
+    void 상품_id와_상품_이름을_쪼개어서_매핑하여_새로운_ProductName_엔티티를_생성할_수_있다() {
         //Arrange
         var productId = 1L;
         var dividedProductName = Set.of("아이스", "녹차", "라떼");

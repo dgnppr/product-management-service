@@ -33,7 +33,7 @@ class ProductNameRepositoryTest {
     private ProductNameRepository sut;
 
     @Test
-    void 가게_id와_상품_이름을_사용하여_ProductEntity_페이지를_반환한다() {
+    void 가게_id와_상품_이름을_사용하여_productEntity_page로_반환한다() {
         //[Arrange 1] StoreEntity 생성
         var store = storeRepository.save(StoreEntity.create(
                 1L,
@@ -84,6 +84,25 @@ class ProductNameRepositoryTest {
         assertThat(actual.getNumber()).isEqualTo(pageNumber);
         assertThat(actual.getSize()).isEqualTo(pageSize);
         assertThat(actual.getTotalPages()).isEqualTo(2);
+    }
+
+    @Test
+    void 상품_id를_사용하여_상품_이름을_삭제하면_deleted_at이_활성화된다() {
+        //Arrange
+        var productId = 1L;
+        var productNames = List.of(
+                ProductNameEntity.create(productId, "아이스"),
+                ProductNameEntity.create(productId, "녹차"),
+                ProductNameEntity.create(productId, "라떼")
+        );
+
+        sut.saveAll(productNames);
+
+        //Act
+        sut.deleteAllByProductId(productId);
+
+        //Assert
+        assertThat(sut.findAll()).isEmpty();
     }
 
     public ProductEntity createProduct(
