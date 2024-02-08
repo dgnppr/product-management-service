@@ -88,6 +88,7 @@ class ProductCommandTest {
 
     private CreateProduct createCommand() {
         return new CreateProduct(
+                1L,
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(50),
                 "Test Product",
@@ -110,6 +111,7 @@ class ProductCommandTest {
 
     private ProductEntity createEntity() {
         return ProductEntity.create(
+                1L,
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(50),
                 "Test Product",

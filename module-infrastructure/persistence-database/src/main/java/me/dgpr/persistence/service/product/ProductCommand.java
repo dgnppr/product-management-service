@@ -21,6 +21,7 @@ public class ProductCommand {
 
     public ProductEntity createNewProduct(final CreateProduct command) {
         ProductEntity productEntity = ProductEntity.create(
+                command.storeId(),
                 command.price(),
                 command.cost(),
                 command.name(),
@@ -55,6 +56,7 @@ public class ProductCommand {
     }
 
     public record CreateProduct(
+            long storeId,
             BigDecimal price,
             BigDecimal cost,
             String name,
