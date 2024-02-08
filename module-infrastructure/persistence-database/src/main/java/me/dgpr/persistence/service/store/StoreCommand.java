@@ -17,9 +17,9 @@ public class StoreCommand {
 
     public StoreEntity createNewStore(final CreateStore command) {
         StoreEntity newStore = StoreEntity.create(
+                command.managerId(),
                 command.companyRegistrationNumber(),
-                command.storeName(),
-                command.managerId()
+                command.storeName()
         );
 
         return storeRepository.save(newStore);

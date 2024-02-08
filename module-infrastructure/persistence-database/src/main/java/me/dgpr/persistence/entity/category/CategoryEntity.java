@@ -16,9 +16,7 @@ public class CategoryEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
-
     private long storeId;
-
     private String name;
 
     protected CategoryEntity() {

@@ -33,9 +33,9 @@ class StoreQueryTest {
         String storeName = "storeName";
         long managerId = 1L;
         StoreEntity storeEntity = StoreEntity.create(
+                managerId,
                 companyRegistrationNumber,
-                storeName,
-                managerId
+                storeName
         );
 
         long storeId = 1L;
