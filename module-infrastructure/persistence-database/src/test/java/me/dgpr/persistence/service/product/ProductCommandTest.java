@@ -1,6 +1,7 @@
 package me.dgpr.persistence.service.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -12,8 +13,10 @@ import java.util.Optional;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.ProductRepository;
+import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.ProductCommand.CreateProduct;
 import me.dgpr.persistence.service.product.ProductCommand.UpdateProduct;
+import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -29,11 +32,27 @@ class ProductCommandTest {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private StoreRepository storeRepository;
+
     @InjectMocks
     private ProductCommand sut;
 
     @Test
-    void 가격_원가_이름_설명_바코드_유통기한_사이즈로_새로운_Product_엔티티를_생성할_수_있다() {
+    void 존재하지_않는_가게_아이디로_새로운_Product_엔티티를_만들경우_NotFoundStoreException_예외_발생() {
+        //Arrange
+        when(storeRepository.findById(any()))
+                .thenReturn(Optional.empty());
+
+        //Act //Assert
+        assertThrows(
+                NotFoundStoreException.class,
+                () -> sut.createNewProduct(createCommand())
+        );
+    }
+
+    @Test
+    void 가게_아이디_가격_원가_이름_설명_바코드_유통기한_사이즈로_새로운_Product_엔티티를_생성할_수_있다() {
         //Arrange
         CreateProduct command = createCommand();
 
