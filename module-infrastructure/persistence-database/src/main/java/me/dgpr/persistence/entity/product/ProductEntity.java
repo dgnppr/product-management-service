@@ -1,6 +1,9 @@
 package me.dgpr.persistence.entity.product;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,9 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import me.dgpr.persistence.config.BaseEntity;
+import me.dgpr.persistence.utils.Money;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -25,8 +28,18 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_id")
     private Long id;
     private long storeId;
-    private BigDecimal price;
-    private BigDecimal cost;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "price_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "price_currency"))
+    })
+    private Money price;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "cost_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "cost_currency"))
+    })
+    private Money cost;
     private String name;
     private String description;
     private String barcode;
@@ -39,8 +52,8 @@ public class ProductEntity extends BaseEntity {
 
     private ProductEntity(
             final long storeId,
-            final BigDecimal price,
-            final BigDecimal cost,
+            final Money price,
+            final Money cost,
             final String name,
             final String description,
             final String barcode,
@@ -59,8 +72,8 @@ public class ProductEntity extends BaseEntity {
 
     public static ProductEntity create(
             final long storeId,
-            final BigDecimal price,
-            final BigDecimal cost,
+            final Money price,
+            final Money cost,
             final String name,
             final String description,
             final String barcode,
@@ -80,8 +93,8 @@ public class ProductEntity extends BaseEntity {
     }
 
     public void update(
-            BigDecimal price,
-            BigDecimal cost,
+            Money price,
+            Money cost,
             String name,
             String description,
             String barcode,
@@ -105,11 +118,11 @@ public class ProductEntity extends BaseEntity {
         return storeId;
     }
 
-    public BigDecimal getPrice() {
+    public Money getPrice() {
         return price;
     }
 
-    public BigDecimal getCost() {
+    public Money getCost() {
         return cost;
     }
 

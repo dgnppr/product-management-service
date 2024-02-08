@@ -10,6 +10,7 @@ import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.repository.productname.ProductNameRepository;
+import me.dgpr.persistence.utils.Money;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -57,8 +58,8 @@ class ProductNameQueryTest {
         return List.of(
                 ProductEntity.create(
                         1L,
-                        BigDecimal.valueOf(1000),
-                        BigDecimal.valueOf(500),
+                        Money.of(BigDecimal.valueOf(100)),
+                        Money.of(BigDecimal.valueOf(50)),
                         "아이스 초코 라떼",
                         "초코라떼 입니다",
                         "123456788",
@@ -67,8 +68,8 @@ class ProductNameQueryTest {
                 ),
                 ProductEntity.create(
                         1L,
-                        BigDecimal.valueOf(1000),
-                        BigDecimal.valueOf(500),
+                        Money.of(BigDecimal.valueOf(100)),
+                        Money.of(BigDecimal.valueOf(50)),
                         "아이스 카페 라떼",
                         "카페 라떼입니다.",
                         "123456789",
@@ -77,7 +78,7 @@ class ProductNameQueryTest {
                 )
         );
     }
-    
+
     private List<ProductNameEntity> createProductNames() {
         return List.of(
                 ProductNameEntity.create(1L, "아이스"),

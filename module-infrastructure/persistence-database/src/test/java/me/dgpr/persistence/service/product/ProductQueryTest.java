@@ -14,6 +14,7 @@ import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.service.product.exception.NotFoundProductException;
+import me.dgpr.persistence.utils.Money;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,8 @@ class ProductQueryTest {
         var productId = 1L;
         var product = ProductEntity.create(
                 1L,
-                BigDecimal.valueOf(100),
-                BigDecimal.valueOf(50),
+                Money.of(BigDecimal.valueOf(100)),
+                Money.of(BigDecimal.valueOf(50)),
                 "Test Product",
                 "This is a test product",
                 "123456789",
@@ -138,8 +139,8 @@ class ProductQueryTest {
         IntStream.range(0, size).forEach(i -> {
             ProductEntity product = ProductEntity.create(
                     1L,
-                    BigDecimal.valueOf(100),
-                    BigDecimal.valueOf(50),
+                    Money.of(BigDecimal.valueOf(100)),
+                    Money.of(BigDecimal.valueOf(50)),
                     "Test Product " + i,
                     "This is a test product",
                     "123456789",
