@@ -16,8 +16,8 @@ public class StoreQuery {
         this.storeRepository = storeRepository;
     }
 
-    public StoreEntity findById(Long storeId) {
+    public StoreEntity findById(final long storeId) {
         return storeRepository.findById(storeId)
-                .orElseThrow(() -> new NotFoundStoreException(storeId.toString()));
+                .orElseThrow(() -> new NotFoundStoreException(String.valueOf(storeId)));
     }
 }

@@ -35,7 +35,7 @@ class ManagerCommandTest {
         String number = "01011112222";
         String password = "password";
         CreateManager createManager = new CreateManager(number, password);
-        ManagerEntity manager = ManagerEntity.newManager(number, password);
+        ManagerEntity manager = ManagerEntity.create(number, password);
 
         when(managerRepository.findByPhoneNumber(number))
                 .thenReturn(Optional.of(manager));
