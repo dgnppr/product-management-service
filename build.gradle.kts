@@ -1,11 +1,13 @@
 plugins {
     id("java")
+    id("checkstyle")
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "checkstyle")
 
     group = "me.dgpr"
     version = "1.0.0-SNAPSHOT"
@@ -13,6 +15,20 @@ allprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    tasks.compileTestJava {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.compileJava {
+        options.encoding = "UTF-8"
+    }
+
+    checkstyle {
+        maxWarnings = 0
+        configFile = file("${rootDir}/.style/google-styles.xml")
+        toolVersion = "10.13.0"
     }
 }
 
