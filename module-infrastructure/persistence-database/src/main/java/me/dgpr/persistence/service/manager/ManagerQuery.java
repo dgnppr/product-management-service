@@ -16,13 +16,13 @@ public class ManagerQuery {
         this.managerRepository = managerRepository;
     }
 
-    public ManagerEntity findById(Long managerId) {
+    public ManagerEntity findById(final long managerId) {
         return managerRepository.findById(managerId)
-                .orElseThrow(() -> new NotFoundManagerException(managerId.toString()));
+                .orElseThrow(() -> new NotFoundManagerException(String.valueOf(managerId)));
     }
 
-    public ManagerEntity findByPhoneNumber(String phoneNumber) {
+    public ManagerEntity findByPhoneNumber(final String phoneNumber) {
         return managerRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new NotFoundManagerException(phoneNumber));
+                .orElseThrow(() -> new NotFoundManagerException(String.valueOf(phoneNumber)));
     }
 }
