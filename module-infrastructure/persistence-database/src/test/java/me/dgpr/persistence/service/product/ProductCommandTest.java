@@ -78,7 +78,7 @@ class ProductCommandTest {
     }
 
     @Test
-    void 가격_원가_이름_설명_바코드_유통기한_사이즈로_기존_Product_엔티티를_속성_일부를_수정할_수_있다() {
+    void 가격과_원가외_이름과_설명과_바코드외_유통기한괴_사이즈로_기존_Product_엔티티를_속성_일부를_수정할_수_있다() {
         //Arrange
         var productId = 1L;
         var product = createEntity();

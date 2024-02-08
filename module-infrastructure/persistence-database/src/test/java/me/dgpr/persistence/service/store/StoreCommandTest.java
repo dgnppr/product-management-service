@@ -27,7 +27,7 @@ class StoreCommandTest {
     private StoreCommand sut;
 
     @Test
-    void 사업자_등록_번호_상호명_매니저_아이디로_새로운_Store_엔티티를_생성할_수_있다() {
+    void 사업자_등록_번호외_상호명과_매니저_아이디로_새로운_Store_엔티티를_생성할_수_있다() {
         //Arrange
         var companyRegistrationNumber = "1234567890";
         var storeName = "storeName";

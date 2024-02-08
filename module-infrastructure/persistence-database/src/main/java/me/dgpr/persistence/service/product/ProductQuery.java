@@ -23,8 +23,14 @@ public class ProductQuery {
                 .orElseThrow(() -> new NotFoundProductException(String.valueOf(id)));
     }
 
-    public Page<ProductEntity> findAll(final Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Page<ProductEntity> findAllByStoreId(
+            final long storeId,
+            final Pageable pageable
+    ) {
+        return productRepository.findAllByStoreId(
+                storeId,
+                pageable
+        );
     }
 
     public Page<ProductEntity> findByName(
