@@ -41,6 +41,7 @@ class ProductQueryTest {
         //Arrange
         long productId = 1L;
         ProductEntity product = ProductEntity.create(
+                1L,
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(50),
                 "Test Product",
@@ -133,6 +134,7 @@ class ProductQueryTest {
         List<ProductEntity> products = new ArrayList<>();
         IntStream.range(0, size).forEach(i -> {
             ProductEntity product = ProductEntity.create(
+                    1L,
                     BigDecimal.valueOf(100),
                     BigDecimal.valueOf(50),
                     "Test Product " + i,

@@ -72,6 +72,7 @@ class ProductRepositoryTest {
 
     private ProductEntity createEntity(String productName) {
         return ProductEntity.create(
+                1L,
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(50),
                 productName,

@@ -25,6 +25,8 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_id")
     private Long id;
 
+    private long storeId;
+
     private BigDecimal price;
 
     private BigDecimal cost;
@@ -44,13 +46,16 @@ public class ProductEntity extends BaseEntity {
     }
 
     private ProductEntity(
+            final long storeId,
             final BigDecimal price,
             final BigDecimal cost,
             final String name,
             final String description,
             final String barcode,
             final LocalDateTime expirationDate,
-            final ProductSize size) {
+            final ProductSize size
+    ) {
+        this.storeId = storeId;
         this.price = price;
         this.cost = cost;
         this.name = name;
@@ -61,14 +66,25 @@ public class ProductEntity extends BaseEntity {
     }
 
     public static ProductEntity create(
+            final long storeId,
             final BigDecimal price,
             final BigDecimal cost,
             final String name,
             final String description,
             final String barcode,
             final LocalDateTime expirationDate,
-            final ProductSize size) {
-        return new ProductEntity(price, cost, name, description, barcode, expirationDate, size);
+            final ProductSize size
+    ) {
+        return new ProductEntity(
+                storeId,
+                price,
+                cost,
+                name,
+                description,
+                barcode,
+                expirationDate,
+                size
+        );
     }
 
     public void update(
@@ -78,7 +94,8 @@ public class ProductEntity extends BaseEntity {
             String description,
             String barcode,
             LocalDateTime expirationDate,
-            ProductSize size) {
+            ProductSize size
+    ) {
         this.price = price;
         this.cost = cost;
         this.name = name;
@@ -90,6 +107,10 @@ public class ProductEntity extends BaseEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public long getStoreId() {
+        return storeId;
     }
 
     public BigDecimal getPrice() {

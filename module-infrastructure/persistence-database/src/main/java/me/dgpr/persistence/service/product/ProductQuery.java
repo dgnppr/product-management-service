@@ -29,7 +29,8 @@ public class ProductQuery {
 
     public Page<ProductEntity> findByName(
             final String name,
-            final Pageable pageable) {
+            final Pageable pageable
+    ) {
         return productRepository.findByNameContaining(name, pageable);
     }
 }
