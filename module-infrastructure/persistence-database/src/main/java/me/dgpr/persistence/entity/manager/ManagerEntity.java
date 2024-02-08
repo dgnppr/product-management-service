@@ -13,7 +13,7 @@ public class ManagerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "manager_id", nullable = false)
+    @Column(name = "manager_id")
     private Long id;
 
     private String phoneNumber;
