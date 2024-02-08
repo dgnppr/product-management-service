@@ -32,13 +32,13 @@ public class ProductCategoryCommand {
     }
 
     public int createProductCategory(final CreateProductCategory command) {
-        // 1. ProductId로 ProductEntity 조회
+        // 1. 상품 ID로 상품 조회
         productRepository.findById(command.productId())
                 .orElseThrow(
                         () -> new NotFoundProductException(String.valueOf(command.productId()))
                 );
 
-        // 2. CategoryIds로 CategoryEntities 조회
+        // 2. 카테고리 ID Set으로 카테고리 조회
         Set<Long> categoryIds = command.categoryIds.stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
@@ -48,17 +48,21 @@ public class ProductCategoryCommand {
             throw new NotFoundCategoryException(String.valueOf(command.categoryIds()));
         }
 
-        // 3. ProductCategoryEntity 생성
+        // 3. 상품 카테고리 리스트 생성
         List<ProductCategoryEntity> productCategories = command.categoryIds().stream()
-                .map(it -> {
-                    return ProductCategoryEntity.create(
-                            command.productId,
-                            it
-                    );
-                })
-                .toList();
+                .map(it ->
+                        ProductCategoryEntity.create(
+                                command.productId,
+                                it
+                        )
+                ).toList();
 
+        // 4. 상품 카테고리 리스트 저장
         return productCategoryRepository.saveAll(productCategories).size();
+    }
+
+    public void deleteAllByProductId(final long productId) {
+        productCategoryRepository.deleteAllByProductId(productId);
     }
 
     public record CreateProductCategory(

@@ -6,10 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import me.dgpr.persistence.config.BaseEntity;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "product_category")
-public class ProductCategoryEntity {
+@SQLDelete(sql = "UPDATE product_category SET deleted_at = NOW() WHERE product_category_id = ?")
+@Where(clause = "deleted_at is NULL")
+public class ProductCategoryEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
