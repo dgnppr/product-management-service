@@ -1,16 +1,15 @@
 package me.dgpr.persistence.service.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.repository.manager.ManagerRepository;
 import me.dgpr.persistence.service.manager.ManagerCommand.CreateManager;
+import me.dgpr.persistence.service.manager.exception.DuplicatedManagerException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -30,23 +29,20 @@ class ManagerCommandTest {
     private ManagerCommand sut;
 
     @Test
-    void 저장된_휴대폰_번호가_있으면_매니저_엔티티를_생성하지_않고_반환한다() {
+    void 저장된_휴대폰_번호으로_새로운_ManagerEntity를_생성하면_DuplicatedManagerException_예외_발생() {
         //Arrange
         var number = "01011112222";
         var password = "password";
         var createManager = new CreateManager(number, password);
-        var manager = ManagerEntity.create(number, password);
 
-        when(managerRepository.findByPhoneNumber(number))
-                .thenReturn(Optional.of(manager));
+        when(managerRepository.existsByPhoneNumber(number))
+                .thenReturn(true);
 
-        //Act
-        ManagerEntity actual = sut.getOrCreateNewManager(createManager);
-
-        //Assert
-        assertThat(actual.getPhoneNumber()).isEqualTo(number);
-        assertThat(actual.getPassword()).isEqualTo(password);
-        verify(managerRepository, never()).save(any());
+        //Act //Assert
+        assertThrows(
+                DuplicatedManagerException.class,
+                () -> sut.createNewManager(createManager)
+        );
     }
 
     @Test
@@ -56,14 +52,14 @@ class ManagerCommandTest {
         var password = "password";
         var createManager = new CreateManager(number, password);
 
-        when(managerRepository.findByPhoneNumber(number))
-                .thenReturn(Optional.empty());
+        when(managerRepository.existsByPhoneNumber(number))
+                .thenReturn(false);
 
         when(managerRepository.save(any()))
                 .then(returnsFirstArg());
 
         //Act
-        ManagerEntity actual = sut.getOrCreateNewManager(createManager);
+        ManagerEntity actual = sut.createNewManager(createManager);
 
         //Assert
         assertThat(actual.getPhoneNumber()).isEqualTo(number);
