@@ -24,7 +24,6 @@ public class CreateManager implements CreateManagerUseCase {
 
     @Override
     public Manager command(final Command command) {
-
         if (managerQuery.existsByPhoneNumber(command.phoneNumber())) {
             throw new DuplicatedManagerException(command.phoneNumber());
         }
