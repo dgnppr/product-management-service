@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -28,6 +29,9 @@ class CreateManagerTest {
 
     @Mock
     private ManagerQuery managerQuery;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private CreateManager sut;
@@ -53,6 +57,9 @@ class CreateManagerTest {
 
         when(managerCommand.createNewManager(eq(createManager)))
                 .thenReturn(managerEntity);
+
+        when(passwordEncoder.encode(eq(password)))
+                .thenReturn(password);
 
         var command = new Command(phoneNumber, password);
 
