@@ -3,6 +3,7 @@ package me.dgpr.config.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.List;
+import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -19,10 +21,21 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class CustomSecurityConfig {
 
+    private final JwtTokenProperties jwtTokenProperties;
     private final ObjectMapper objectMapper;
+    private final JwtTokenHandler jwtTokenHandler;
+    private final QueryManagerByIdUseCase queryManagerByIdUseCase;
 
-    public CustomSecurityConfig(ObjectMapper objectMapper) {
+    public CustomSecurityConfig(
+            JwtTokenProperties jwtTokenProperties,
+            ObjectMapper objectMapper,
+            JwtTokenHandler jwtTokenHandler,
+            QueryManagerByIdUseCase queryManagerByIdUseCase
+    ) {
+        this.jwtTokenProperties = jwtTokenProperties;
         this.objectMapper = objectMapper;
+        this.jwtTokenHandler = jwtTokenHandler;
+        this.queryManagerByIdUseCase = queryManagerByIdUseCase;
     }
 
     @Bean
@@ -39,6 +52,13 @@ public class CustomSecurityConfig {
                         it -> it.requestMatchers("/v*/managers", "/v*/login").permitAll()
                                 .requestMatchers("/v*/**").authenticated()
                                 .anyRequest().permitAll()
+                )
+                .addFilterBefore(
+                        new JwtTokenFilter(
+                                jwtTokenProperties.getSecretKey(),
+                                jwtTokenHandler,
+                                queryManagerByIdUseCase
+                        ), UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(
                         it -> it.authenticationEntryPoint(

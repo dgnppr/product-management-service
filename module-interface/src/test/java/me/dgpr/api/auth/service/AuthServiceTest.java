@@ -39,7 +39,7 @@ class AuthServiceTest {
     private AuthService sut;
 
     @Test
-    void 사장님_id와_password를_사용하여_LoginResponse를_반환한다() {
+    void 휴대폰_번호와_password를_사용하여_LoginResponse를_반환한다() {
         //Arrange
         var manager = ManagerFixture.DEFAULT_MANAGER.instance();
         var phoneNumber = manager.phoneNumber();

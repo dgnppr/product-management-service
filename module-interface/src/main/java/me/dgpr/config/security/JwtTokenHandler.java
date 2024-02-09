@@ -17,20 +17,6 @@ public class JwtTokenHandler {
     public static final String ID = "id";
     public static final String SUBJECT = "authentication";
 
-    public void verifyToken(
-            String secretKey,
-            String token
-    ) {
-        try {
-            Claims claims = doVerifyTokenAndGetClaims(secretKey, token);
-            if (!Objects.equals(claims.getSubject(), SUBJECT)) {
-                throw new JwtException("Invalid subject in the token");
-            }
-        } catch (Exception e) {
-            throw new JwtException(e.getMessage(), e);
-        }
-    }
-
     public String generateToken(
             Long id,
             String secretKey,
@@ -46,13 +32,19 @@ public class JwtTokenHandler {
                 .compact();
     }
 
-    public Long getIdFromToken(
+    public Long verifyAndGetIdFromToken(
             String secretKey,
             String token
     ) {
         try {
             Claims claims = doVerifyTokenAndGetClaims(secretKey, token);
+
+            if (!Objects.equals(claims.getSubject(), SUBJECT)) {
+                throw new JwtException("Invalid subject in the token");
+            }
+
             return claims.get(ID, Long.class);
+            
         } catch (Exception e) {
             throw new JwtException(e.getMessage(), e);
         }

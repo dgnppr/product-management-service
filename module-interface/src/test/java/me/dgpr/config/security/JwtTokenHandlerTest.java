@@ -2,9 +2,10 @@ package me.dgpr.config.security;
 
 import static me.dgpr.config.security.JwtTokenHandler.SUBJECT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import java.util.Date;
 import javax.crypto.SecretKey;
@@ -45,29 +46,6 @@ class JwtTokenHandlerTest {
     }
 
     @Test
-    void 비밀키를_사용하여_유효한_토큰을_검증한다() {
-        //Arrange
-        var id = 1L;
-        var issuedAt = new Date();
-        var expirationTime = 2000L;
-
-        var token = sut.generateToken(
-                id,
-                SECRET_KEY,
-                issuedAt,
-                expirationTime
-        );
-
-        //Act & Assert
-        assertThatNoException().isThrownBy(() -> {
-            sut.verifyToken(
-                    SECRET_KEY,
-                    token
-            );
-        });
-    }
-
-    @Test
     void 비밀키를_사용하여_토큰에서_id를_추출한다() {
         //Arrange
         var id = 1L;
@@ -82,12 +60,26 @@ class JwtTokenHandlerTest {
         );
 
         //Act
-        Long actual = sut.getIdFromToken(
+        Long actual = sut.verifyAndGetIdFromToken(
                 SECRET_KEY,
                 token
         );
 
         //Assert
         assertThat(actual).isEqualTo(id);
+    }
+
+    @Test
+    void 유효하지_않은_토큰을_검증하면_JwtException_예외_발생() {
+        //Arrange
+        var invalidToken = "invalid token";
+        //Act & Assert
+        assertThrows(
+                JwtException.class,
+                () -> sut.verifyAndGetIdFromToken(
+                        SECRET_KEY,
+                        invalidToken
+                )
+        );
     }
 }
