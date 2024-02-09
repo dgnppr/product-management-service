@@ -17,7 +17,7 @@ class MoneyTest {
             "100, 101, false",
             "100, 99, true",
     })
-    void 돈_객체_(int amount1, int amount2, boolean expected) {
+    void 돈_객체의_amount_비교하기(int amount1, int amount2, boolean expected) {
         //Arrange
         var money1 = Money.of(BigDecimal.valueOf(amount1));
         var money2 = Money.of(BigDecimal.valueOf(amount2));
