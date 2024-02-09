@@ -1,4 +1,4 @@
-package me.dgpr.persistence.utils;
+package me.dgpr.persistence.common;
 
 import jakarta.persistence.Embeddable;
 import java.math.BigDecimal;

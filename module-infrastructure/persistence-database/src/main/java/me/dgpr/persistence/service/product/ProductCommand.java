@@ -1,13 +1,13 @@
 package me.dgpr.persistence.service.product;
 
 import java.time.LocalDateTime;
+import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
-import me.dgpr.persistence.utils.Money;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
