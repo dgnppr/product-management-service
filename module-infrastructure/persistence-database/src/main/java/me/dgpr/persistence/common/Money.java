@@ -43,11 +43,10 @@ public class Money {
             return true;
         }
 
-        if (obj == null || !(obj instanceof Money)) {
+        if (!(obj instanceof Money other)) {
             return false;
         }
 
-        Money other = (Money) obj;
         return this.amount.equals(other.amount) && this.currency.equals(other.currency);
     }
 
@@ -58,7 +57,7 @@ public class Money {
 
     @Override
     public String toString() {
-        return String.format("%s %s", currency.getSymbol(), amount);
+        return String.format("%s %s", amount, currency.getSymbol());
     }
 
     public BigDecimal getAmount() {
