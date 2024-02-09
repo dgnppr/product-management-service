@@ -1,0 +1,17 @@
+### 사장님 로그인 - 성공
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "phoneNumber": "01012345678",
+  "password": "password"
+}
+
+### 사장님 로그인 - 실패
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "phoneNumber": "",
+  "password": ""
+}

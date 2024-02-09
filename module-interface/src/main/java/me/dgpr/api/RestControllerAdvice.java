@@ -1,21 +1,19 @@
-package me.dgpr.support;
+package me.dgpr.api;
 
 import jakarta.validation.ConstraintViolationException;
-import me.dgpr.api.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 // TODO logging
-@RestControllerAdvice
-public class ApiRestControllerAdvice {
+@org.springframework.web.bind.annotation.RestControllerAdvice
+public class RestControllerAdvice {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiRestControllerAdvice.class);
+    private static final Logger log = LoggerFactory.getLogger(RestControllerAdvice.class);
 
     /**
      * 400
