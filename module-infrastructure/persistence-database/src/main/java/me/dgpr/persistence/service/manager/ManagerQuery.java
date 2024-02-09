@@ -25,4 +25,8 @@ public class ManagerQuery {
         return managerRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new NotFoundManagerException(String.valueOf(phoneNumber)));
     }
+
+    public boolean existsByPhoneNumber(final String phoneNumber) {
+        return managerRepository.existsByPhoneNumber(phoneNumber);
+    }
 }
