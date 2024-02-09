@@ -1,15 +1,14 @@
 package me.dgpr.api.auth;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import me.dgpr.api.auth.dto.LoginRequest;
+import me.dgpr.api.auth.dto.LoginResponse;
+import me.dgpr.api.auth.service.AuthService;
 import me.dgpr.api.support.AbstractMockMvcTest;
-import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.usecase.LoginManagerUseCase;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,7 +18,7 @@ import org.springframework.http.MediaType;
 class AuthRestControllerTest extends AbstractMockMvcTest {
 
     @MockBean
-    private LoginManagerUseCase loginManagerUseCase;
+    private AuthService authService;
 
     @CsvSource({"01012345678,thisispassword"})
     @ParameterizedTest(name = "올바른 휴대폰 번호 입력 : {0}, 올바른 비밀번호 입력: {1}")
@@ -30,8 +29,11 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
                 validPassword
         );
 
-        when(loginManagerUseCase.query(request.toQuery()))
-                .thenReturn(mock(Manager.class));
+        var token = "token";
+        var response = new LoginResponse(token);
+
+        when(authService.login(request))
+                .thenReturn(response);
 
         //when & then
         mockMvc.perform(
@@ -40,7 +42,7 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
                                 .content(body(request))
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.meta.code").value(HttpStatus.OK.value()));
+                .andExpect(jsonPath("$.data.token").value(token));
     }
 
     @CsvSource({

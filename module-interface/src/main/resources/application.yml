@@ -1,0 +1,3 @@
+jwt:
+  secretKey: "iEHWLiwsVS4TSn2aOvAFEVTwJxgFee86r3SQCyl1EyU"
+  expirationTime: 86400000
