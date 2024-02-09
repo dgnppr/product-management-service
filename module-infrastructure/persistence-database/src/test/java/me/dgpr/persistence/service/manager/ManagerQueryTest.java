@@ -2,6 +2,7 @@ package me.dgpr.persistence.service.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -89,5 +90,19 @@ class ManagerQueryTest {
                 NotFoundManagerException.class,
                 () -> sut.findByPhoneNumber(notExistingPhoneNumber)
         );
+    }
+
+    @Test
+    void 등록된_휴대폰_번호가_있으면_true를_반환한다() {
+        //Arrange
+        var phoneNumber = "01011112222";
+        when(managerRepository.existsByPhoneNumber(eq(phoneNumber)))
+                .thenReturn(true);
+
+        //Act
+        boolean actual = sut.existsByPhoneNumber(phoneNumber);
+
+        //Assert
+        assertThat(actual).isTrue();
     }
 }

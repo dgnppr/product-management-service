@@ -15,12 +15,7 @@ public class ManagerCommand {
         this.managerRepository = managerRepository;
     }
 
-    public ManagerEntity getOrCreateNewManager(final CreateManager command) {
-        return managerRepository.findByPhoneNumber(command.phoneNumber())
-                .orElseGet(() -> createNewManager(command));
-    }
-
-    private ManagerEntity createNewManager(final CreateManager command) {
+    public ManagerEntity createNewManager(final CreateManager command) {
         ManagerEntity newManager = ManagerEntity.create(
                 command.phoneNumber(),
                 command.password()
@@ -32,6 +27,16 @@ public class ManagerCommand {
     public record CreateManager(
             String phoneNumber,
             String password) {
+
+        public static CreateManager of(
+                String phoneNumber,
+                String password
+        ) {
+            return new CreateManager(
+                    phoneNumber,
+                    password
+            );
+        }
 
     }
 }

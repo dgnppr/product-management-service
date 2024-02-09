@@ -1,0 +1,17 @@
+### 사장님 회원가입 - 성공
+POST http://localhost:8080/v1/managers
+Content-Type: application/json
+
+{
+  "phoneNumber": "01012345678",
+  "password": "password"
+}
+
+### 사장님 회원가입 - 실패 (BAD_REQUEST)
+POST http://localhost:8080/v1/managers
+Content-Type: application/json
+
+{
+  "phoneNumber": "010-1234-5678",
+  "password": "passwordpasswordpassword"
+}

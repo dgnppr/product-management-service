@@ -32,8 +32,12 @@ public class ManagerEntity extends BaseEntity {
 
     public static ManagerEntity create(
             final String phoneNumber,
-            final String password) {
-        return new ManagerEntity(phoneNumber, password);
+            final String password
+    ) {
+        return new ManagerEntity(
+                phoneNumber,
+                password
+        );
     }
 
     public Long getId() {

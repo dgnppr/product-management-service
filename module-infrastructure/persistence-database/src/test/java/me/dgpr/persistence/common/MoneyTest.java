@@ -1,4 +1,4 @@
-package me.dgpr.persistence.utils;
+package me.dgpr.persistence.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +17,7 @@ class MoneyTest {
             "100, 101, false",
             "100, 99, true",
     })
-    void isEqualOrGreater_withVariousCases(int amount1, int amount2, boolean expected) {
+    void 돈_객체의_amount_비교하기(int amount1, int amount2, boolean expected) {
         //Arrange
         var money1 = Money.of(BigDecimal.valueOf(amount1));
         var money2 = Money.of(BigDecimal.valueOf(amount2));
