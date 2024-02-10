@@ -24,7 +24,7 @@ public class AbstractMockMvcTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    protected String body(Object body) throws JsonProcessingException {
+    protected String json(Object body) throws JsonProcessingException {
         return objectMapper.writeValueAsString(body);
     }
 }

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class LogoutManager implements LogoutManagerUseCase {
 
     public static final String KEY_PREFIX = "logout:";
-    private final RedisService redisService;
+    private final RedisService logoutRedisService;
 
-    public LogoutManager(final RedisService redisService) {
-        this.redisService = redisService;
+    public LogoutManager(final RedisService logoutRedisService) {
+        this.logoutRedisService = logoutRedisService;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LogoutManager implements LogoutManagerUseCase {
 
         logoutTokens.add(command.token());
 
-        redisService.set(
+        logoutRedisService.set(
                 key,
                 logoutTokens,
                 command.duration()
@@ -32,7 +32,7 @@ public class LogoutManager implements LogoutManagerUseCase {
     }
 
     private Set<String> safelyGetLogoutTokens(final String key) {
-        Object result = redisService.get(key, Set.class).orElse(null);
+        Object result = logoutRedisService.get(key, Set.class).orElse(null);
 
         if (result instanceof Set) {
             return new HashSet<>((Set<String>) result);

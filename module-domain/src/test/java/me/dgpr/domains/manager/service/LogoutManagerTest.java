@@ -24,7 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class LogoutManagerTest {
 
     @Mock
-    private RedisService redisService;
+    private RedisService logoutRedisService;
 
     @InjectMocks
     private LogoutManager sut;
@@ -43,7 +43,7 @@ class LogoutManagerTest {
                 ttl
         );
 
-        when(redisService.get(
+        when(logoutRedisService.get(
                 eq(redisKey),
                 any()
         )).thenReturn(Optional.of(Set.of("token1", "token2")));
@@ -52,7 +52,7 @@ class LogoutManagerTest {
         sut.command(command);
 
         //Assert
-        verify(redisService)
+        verify(logoutRedisService)
                 .set(redisKey, Set.of("token1", "token2", "token3"), ttl);
     }
 }

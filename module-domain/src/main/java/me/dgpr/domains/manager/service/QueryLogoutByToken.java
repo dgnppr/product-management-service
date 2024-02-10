@@ -4,16 +4,16 @@ import static me.dgpr.domains.manager.service.LogoutManager.generateLogoutKey;
 
 import java.util.HashSet;
 import java.util.Set;
-import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
+import me.dgpr.domains.manager.usecase.QueryLogoutByTokenUseCase;
 import me.dgpr.persistence.service.RedisService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QueryLogoutById implements QueryLogoutByIdUseCase {
+public class QueryLogoutByToken implements QueryLogoutByTokenUseCase {
 
     private final RedisService redisService;
 
-    public QueryLogoutById(final RedisService redisService) {
+    public QueryLogoutByToken(final RedisService redisService) {
         this.redisService = redisService;
     }
 

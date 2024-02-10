@@ -31,7 +31,7 @@ class ManagerRestControllerTest extends AbstractMockMvcTest {
         mockMvc.perform(
                         post("/v1/managers")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(body(request))
+                                .content(json(request))
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.meta.code").value(HttpStatus.CREATED.value()));
@@ -54,7 +54,7 @@ class ManagerRestControllerTest extends AbstractMockMvcTest {
         mockMvc.perform(
                         post("/v1/managers")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(body(request))
+                                .content(json(request))
                 )
                 .andExpect(status().isBadRequest());
     }

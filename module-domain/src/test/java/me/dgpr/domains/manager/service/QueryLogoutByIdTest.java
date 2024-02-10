@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import java.util.Set;
-import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
+import me.dgpr.domains.manager.usecase.QueryLogoutByTokenUseCase;
 import me.dgpr.persistence.service.RedisService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,7 +26,7 @@ class QueryLogoutByIdTest {
     private RedisService redisService;
 
     @InjectMocks
-    private QueryLogoutById sut;
+    private QueryLogoutByToken sut;
 
     @Test
     void 로그아웃된_토큰이면_true를_반환한다() {
@@ -34,7 +34,7 @@ class QueryLogoutByIdTest {
         var managerId = 1L;
         var token = "token";
         var redisKey = KEY_PREFIX + 1L;
-        var query = new QueryLogoutByIdUseCase.Query(
+        var query = new QueryLogoutByTokenUseCase.Query(
                 managerId,
                 token
         );
@@ -57,7 +57,7 @@ class QueryLogoutByIdTest {
         var managerId = 1L;
         var token = "token";
         var redisKey = KEY_PREFIX + 1L;
-        var query = new QueryLogoutByIdUseCase.Query(
+        var query = new QueryLogoutByTokenUseCase.Query(
                 managerId,
                 token
         );

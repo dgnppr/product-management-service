@@ -1,3 +1,11 @@
+spring:
+  application:
+    name: product-management
+  profiles:
+    include:
+      - persistence-database
+      - persistence-redis-adapter
+
 jwt:
   secretKey: "iEHWLiwsVS4TSn2aOvAFEVTwJxgFee86r3SQCyl1EyU"
   expirationTime: 86400000

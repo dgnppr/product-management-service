@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
+import me.dgpr.domains.manager.usecase.QueryLogoutByTokenUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase.Query;
 import org.springframework.http.HttpHeaders;
@@ -21,18 +21,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final String secretKey;
     private final JwtTokenHandler jwtTokenHandler;
     private final QueryManagerByIdUseCase queryManagerByIdUseCase;
-    private final QueryLogoutByIdUseCase queryLogoutByIdUseCase;
+    private final QueryLogoutByTokenUseCase queryLogoutByTokenUseCase;
 
     public JwtTokenFilter(
             String secretKey,
             JwtTokenHandler jwtTokenHandler,
             QueryManagerByIdUseCase queryManagerByIdUseCase,
-            QueryLogoutByIdUseCase queryLogoutByIdUseCase
+            QueryLogoutByTokenUseCase queryLogoutByTokenUseCase
     ) {
         this.secretKey = secretKey;
         this.jwtTokenHandler = jwtTokenHandler;
         this.queryManagerByIdUseCase = queryManagerByIdUseCase;
-        this.queryLogoutByIdUseCase = queryLogoutByIdUseCase;
+        this.queryLogoutByTokenUseCase = queryLogoutByTokenUseCase;
     }
 
     @Override
@@ -59,12 +59,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             );
             Manager manager = queryManagerByIdUseCase.query(new Query(managerId));
 
-            QueryLogoutByIdUseCase.Query query = new QueryLogoutByIdUseCase.Query(
+            QueryLogoutByTokenUseCase.Query query = new QueryLogoutByTokenUseCase.Query(
                     managerId,
                     token
             );
 
-            if (!queryLogoutByIdUseCase.query(query)) {
+            if (!queryLogoutByTokenUseCase.query(query)) {
                 setAuthentication(ManagerContext.from(manager));
             }
 

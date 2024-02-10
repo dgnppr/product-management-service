@@ -1,6 +1,7 @@
 package me.dgpr.config.security;
 
 import java.util.Collection;
+import java.util.Objects;
 import me.dgpr.domains.manager.domain.Manager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,11 +12,11 @@ public class ManagerContext implements UserDetails {
     public static final String ROLE = "ROLE_USER";
     private Manager manager;
 
-    protected ManagerContext(Manager manager) {
+    protected ManagerContext(final Manager manager) {
         this.manager = manager;
     }
 
-    public static ManagerContext from(Manager manager) {
+    public static ManagerContext from(final Manager manager) {
         return new ManagerContext(manager);
     }
 
@@ -23,6 +24,11 @@ public class ManagerContext implements UserDetails {
         return manager;
     }
 
+    public Long getId() {
+        Objects.requireNonNull(manager.id());
+        return manager.id();
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList(ROLE);
@@ -35,7 +41,7 @@ public class ManagerContext implements UserDetails {
 
     @Override
     public String getUsername() {
-        return manager.phoneNumber();
+        return String.valueOf(manager.id());
     }
 
     @Override

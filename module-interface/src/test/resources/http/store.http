@@ -1,0 +1,21 @@
+### 가게 등록 - 성공
+POST http://localhost:8080/v1/stores
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+# fill in token to Authorization header
+
+{
+  "companyRegistrationNumber": "1234-567-890",
+  "businessName": "businessName"
+}
+
+### 가게 등록 - 실패
+POST http://localhost:8080/v1/stores
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+# fill in token to Authorization header
+
+{
+  "companyRegistrationNumber": "",
+  "businessName": ""
+}
