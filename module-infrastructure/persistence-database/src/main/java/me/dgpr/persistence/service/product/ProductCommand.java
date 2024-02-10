@@ -28,8 +28,9 @@ public class ProductCommand {
 
     public ProductEntity createNewProduct(final CreateProduct command) {
         // 1. StoreId로 StoreEntity 조회
-        storeRepository.findById(command.storeId())
-                .orElseThrow(() -> new NotFoundStoreException(String.valueOf(command.storeId())));
+        if (!storeRepository.existsById(command.storeId())) {
+            throw new NotFoundStoreException(String.valueOf(command.storeId()));
+        }
 
         // 2. ProductEntity 생성
         ProductEntity productEntity = ProductEntity.create(

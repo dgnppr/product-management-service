@@ -24,11 +24,11 @@ public class ProductNameCommand {
         this.productRepository = productRepository;
     }
 
-    public int createProductNames(final CreateCommand command) {
+    public int createProductNames(final CreateProductNames command) {
         // 1. 상품 ID로 상품 조회
-        productRepository.findById(command.productId())
-                .orElseThrow(
-                        () -> new NotFoundProductException(String.valueOf(command.productId())));
+        if (!productRepository.existsById(command.productId())) {
+            throw new NotFoundProductException(String.valueOf(command.productId()));
+        }
 
         // 2. 상품 이름 생성
         List<ProductNameEntity> productNames = command.names().stream()
@@ -47,7 +47,7 @@ public class ProductNameCommand {
         productNameRepository.deleteAllByProductId(productId);
     }
 
-    public record CreateCommand(
+    public record CreateProductNames(
             long productId,
             Set<String> names) {
 
