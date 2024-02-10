@@ -1,6 +1,6 @@
 package me.dgpr.domains.manager.usecase;
 
-public interface QueryLogoutByIdUseCase {
+public interface QueryLogoutByTokenUseCase {
 
     boolean query(final Query query);
 

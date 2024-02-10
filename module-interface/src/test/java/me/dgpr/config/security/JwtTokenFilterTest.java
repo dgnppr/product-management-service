@@ -15,7 +15,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
+import me.dgpr.domains.manager.usecase.QueryLogoutByTokenUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -38,7 +38,7 @@ class JwtTokenFilterTest {
     @Mock
     private QueryManagerByIdUseCase queryManagerByIdUseCase;
     @Mock
-    private QueryLogoutByIdUseCase queryLogoutByIdUseCase;
+    private QueryLogoutByTokenUseCase queryLogoutByTokenUseCase;
 
     private JwtTokenFilter sut;
 
@@ -48,7 +48,7 @@ class JwtTokenFilterTest {
                 secretKey,
                 jwtTokenHandler,
                 queryManagerByIdUseCase,
-                queryLogoutByIdUseCase
+                queryLogoutByTokenUseCase
         );
     }
 
@@ -120,7 +120,7 @@ class JwtTokenFilterTest {
         when(queryManagerByIdUseCase.query(any(QueryManagerByIdUseCase.Query.class)))
                 .thenReturn(manager);
 
-        when(queryLogoutByIdUseCase.query(any(QueryLogoutByIdUseCase.Query.class)))
+        when(queryLogoutByTokenUseCase.query(any(QueryLogoutByTokenUseCase.Query.class)))
                 .thenReturn(false);
 
         // Act
@@ -159,7 +159,7 @@ class JwtTokenFilterTest {
         when(queryManagerByIdUseCase.query(any(QueryManagerByIdUseCase.Query.class)))
                 .thenReturn(manager);
 
-        when(queryLogoutByIdUseCase.query(any(QueryLogoutByIdUseCase.Query.class)))
+        when(queryLogoutByTokenUseCase.query(any(QueryLogoutByTokenUseCase.Query.class)))
                 .thenReturn(true);
 
         //Act
