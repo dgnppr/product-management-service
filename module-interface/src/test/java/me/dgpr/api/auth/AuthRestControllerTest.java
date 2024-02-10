@@ -9,6 +9,7 @@ import me.dgpr.api.auth.dto.LoginRequest;
 import me.dgpr.api.auth.dto.LoginResponse;
 import me.dgpr.api.auth.service.AuthService;
 import me.dgpr.api.support.AbstractMockMvcTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -42,7 +43,7 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
         mockMvc.perform(
                         post("/v1/login")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(body(request))
+                                .content(json(request))
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.token").value(token));
@@ -65,7 +66,7 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
         mockMvc.perform(
                         post("/v1/login")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(body(request))
+                                .content(json(request))
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.meta.code").value(HttpStatus.BAD_REQUEST.value()));
@@ -87,8 +88,9 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
     }
 
     @Test
+    @DisplayName("사장님 로그인 실패 - 토큰 없음")
     @WithMockUser
-    void 사장님_로그인_실패_토큰없음() throws Exception {
+    void 사장님_로그인_실패() throws Exception {
         //When & Then
         mockMvc.perform(
                         post("/v1/logout")

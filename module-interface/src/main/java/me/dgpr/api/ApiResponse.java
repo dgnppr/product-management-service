@@ -42,6 +42,14 @@ public record ApiResponse<T>(
         );
     }
 
+    public static <T> ApiResponse<T> created(T data) {
+        return of(
+                HttpStatus.CREATED.value(),
+                HttpStatus.CREATED.getReasonPhrase(),
+                data
+        );
+    }
+
     public static <T> ApiResponse<T> badRequest(String errMessage) {
         return of(
                 HttpStatus.BAD_REQUEST.value(),

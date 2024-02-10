@@ -19,7 +19,7 @@ Content-Type: application/json
 ### 사장님 로그아웃 - 성공
 POST http://localhost:8080/v1/logout
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1MzY3MTksImV4cCI6MTcwNzYyMzExOX0.ebQea0YuYH-UAYMBrfNpYov5Ri2mvhzDxP3augQ2V9M
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NDcxODksImV4cCI6MTcwNzYzMzU4OX0.w0YdW50EZIcZovpyyag66WWU6Cxxn1AzI1QGH9MdB_c
 # fill in token to Authorization header
 
 {
