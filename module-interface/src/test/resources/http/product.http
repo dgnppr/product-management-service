@@ -1,0 +1,35 @@
+### 상품 등록 - 성공
+POST http://localhost:8080/v1/stores/1/products
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+  "price": 10000,
+  "cost": 5000,
+  "name": "name1 name2",
+  "description": "description",
+  "barcode": "1234567890",
+  "expirationDate": "2024-12-31T00:00:00",
+  "size": "SMALL",
+  "categoryIds": [
+    1
+  ]
+}
+
+### 상품 등록 - 실패
+POST http://localhost:8080/v1/stores/1/products
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+  "price": 10000,
+  "cost": 5000,
+  "name": "",
+  "description": "",
+  "barcode": "",
+  "expirationDate": "2024-12-31T00:00:00",
+  "size": "",
+  "categoryIds": [
+    1
+  ]
+}
