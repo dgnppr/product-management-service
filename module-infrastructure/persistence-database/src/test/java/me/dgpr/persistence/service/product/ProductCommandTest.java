@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,7 +13,6 @@ import java.util.Optional;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
-import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.ProductCommand.CreateProduct;
@@ -44,8 +42,8 @@ class ProductCommandTest {
     @Test
     void 존재하지_않는_가게_아이디로_새로운_Product_엔티티를_만들경우_NotFoundStoreException_예외_발생() {
         //Arrange
-        when(storeRepository.findById(any()))
-                .thenReturn(Optional.empty());
+        when(storeRepository.existsById(any()))
+                .thenReturn(false);
 
         //Act //Assert
         assertThrows(
@@ -59,8 +57,8 @@ class ProductCommandTest {
         //Arrange
         var command = createCommand();
 
-        when(storeRepository.findById(any()))
-                .thenReturn(Optional.of(mock(StoreEntity.class)));
+        when(storeRepository.existsById(any()))
+                .thenReturn(true);
 
         when(productRepository.save(any()))
                 .then(returnsFirstArg());
