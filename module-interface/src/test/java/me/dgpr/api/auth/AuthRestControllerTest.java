@@ -88,7 +88,7 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
 
     @Test
     @WithMockUser
-    void 토큰없이_사장님_로그아웃을_할_수_없다() throws Exception {
+    void 사장님_로그인_실패_토큰없음() throws Exception {
         //When & Then
         mockMvc.perform(
                         post("/v1/logout")

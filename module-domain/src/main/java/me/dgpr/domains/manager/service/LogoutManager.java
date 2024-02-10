@@ -41,7 +41,7 @@ public class LogoutManager implements LogoutManagerUseCase {
         return new HashSet<>();
     }
 
-    public String generateLogoutKey(final Long id) {
+    public static String generateLogoutKey(final Long id) {
         return KEY_PREFIX + id;
     }
 }

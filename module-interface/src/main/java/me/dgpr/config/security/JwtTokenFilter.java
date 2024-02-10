@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 import me.dgpr.domains.manager.domain.Manager;
+import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase.Query;
 import org.springframework.http.HttpHeaders;
@@ -20,15 +21,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final String secretKey;
     private final JwtTokenHandler jwtTokenHandler;
     private final QueryManagerByIdUseCase queryManagerByIdUseCase;
+    private final QueryLogoutByIdUseCase queryLogoutByIdUseCase;
 
     public JwtTokenFilter(
             String secretKey,
             JwtTokenHandler jwtTokenHandler,
-            QueryManagerByIdUseCase queryManagerByIdUseCase
+            QueryManagerByIdUseCase queryManagerByIdUseCase,
+            QueryLogoutByIdUseCase queryLogoutByIdUseCase
     ) {
         this.secretKey = secretKey;
         this.jwtTokenHandler = jwtTokenHandler;
         this.queryManagerByIdUseCase = queryManagerByIdUseCase;
+        this.queryLogoutByIdUseCase = queryLogoutByIdUseCase;
     }
 
     @Override
@@ -54,7 +58,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     token
             );
             Manager manager = queryManagerByIdUseCase.query(new Query(managerId));
-            setAuthentication(ManagerContext.from(manager));
+
+            QueryLogoutByIdUseCase.Query query = new QueryLogoutByIdUseCase.Query(
+                    managerId,
+                    token
+            );
+
+            if (!queryLogoutByIdUseCase.query(query)) {
+                setAuthentication(ManagerContext.from(manager));
+            }
 
         } catch (Exception e) {
             chain.doFilter(
@@ -63,7 +75,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             );
             return;
         }
-        
+
         chain.doFilter(
                 request,
                 response

@@ -7,11 +7,27 @@ Content-Type: application/json
   "password": "password"
 }
 
-### 사장님 로그인 - 실패
+### 사장님 로그인 - 실패 (UNAUTHORIZED)
 POST http://localhost:8080/v1/login
 Content-Type: application/json
 
 {
   "phoneNumber": "",
   "password": ""
+}
+
+### 사장님 로그아웃 - 성공
+POST http://localhost:8080/v1/logout
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1MzY3MTksImV4cCI6MTcwNzYyMzExOX0.ebQea0YuYH-UAYMBrfNpYov5Ri2mvhzDxP3augQ2V9M
+# fill in token to Authorization header
+
+{
+}
+
+### 사장님 로그아웃 - 실패 (UNAUTHORIZED)
+POST http://localhost:8080/v1/logout
+Content-Type: application/json
+
+{
 }

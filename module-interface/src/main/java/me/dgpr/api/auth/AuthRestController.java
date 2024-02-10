@@ -25,7 +25,8 @@ public class AuthRestController {
     public ApiResponse<LoginResponse> login(
             @Validated @RequestBody final LoginRequest request
     ) {
-        return ApiResponse.ok(authService.login(request));
+        LoginResponse data = authService.login(request);
+        return ApiResponse.ok(data);
     }
 
     @PostMapping("/v1/logout")
