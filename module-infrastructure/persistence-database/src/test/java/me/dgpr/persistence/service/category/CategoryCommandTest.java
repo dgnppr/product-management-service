@@ -36,12 +36,12 @@ class CategoryCommandTest {
     private CategoryCommand sut;
 
     @Test
-    void 존재하지_않는_가게_아이디로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
+    void 존재하지_않는_가게_id로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
         //Arrange
         var notExistingStoreId = -1L;
 
-        when(storeRepository.findById(eq(notExistingStoreId)))
-                .thenReturn(Optional.empty());
+        when(storeRepository.existsById(eq(notExistingStoreId)))
+                .thenReturn(false);
 
         CreateCategory command = new CreateCategory(
                 notExistingStoreId,
