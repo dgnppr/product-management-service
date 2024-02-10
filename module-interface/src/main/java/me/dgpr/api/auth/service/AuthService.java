@@ -36,7 +36,7 @@ public class AuthService {
         Manager manager = loginManagerUseCase.query(request.toQuery());
 
         String token = jwtTokenHandler.generateToken(
-                manager.id(),
+                manager.managerId(),
                 jwtTokenProperties.getSecretKey(),
                 new Date(),
                 jwtTokenProperties.getExpirationTime()

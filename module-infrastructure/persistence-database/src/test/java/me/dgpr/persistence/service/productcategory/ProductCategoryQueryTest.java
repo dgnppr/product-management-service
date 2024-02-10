@@ -48,4 +48,13 @@ class ProductCategoryQueryTest {
                 .extracting(ProductCategoryEntity::getProductId)
                 .containsOnly(productId);
     }
+
+    @Test
+    void 존재하지_않는_카테고리_id로_엔티티_조회시_NotFoundCategoryException_예외_발생() {
+        //Arrange
+
+        //Act
+
+        //Assert
+    }
 }

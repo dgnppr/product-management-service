@@ -23,11 +23,11 @@ public class CategoryCommand {
     }
 
     public CategoryEntity createNewCategory(final CreateCategory command) {
-        // 1. StoreId로 StoreEntity 조회
-        storeRepository.findById(command.storeId())
-                .orElseThrow(() -> new NotFoundStoreException(String.valueOf(command.storeId())));
 
-        // 2. CategoryEntity 생성
+        if (!storeRepository.existsById(command.storeId())) {
+            throw new NotFoundStoreException(String.valueOf(command.storeId()));
+        }
+
         CategoryEntity categoryEntity = CategoryEntity.create(
                 command.storeId(),
                 command.name()

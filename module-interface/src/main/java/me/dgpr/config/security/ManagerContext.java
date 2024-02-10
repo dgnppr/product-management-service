@@ -25,10 +25,10 @@ public class ManagerContext implements UserDetails {
     }
 
     public Long getId() {
-        Objects.requireNonNull(manager.id());
-        return manager.id();
+        Objects.requireNonNull(manager.managerId());
+        return manager.managerId();
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList(ROLE);
@@ -41,7 +41,7 @@ public class ManagerContext implements UserDetails {
 
     @Override
     public String getUsername() {
-        return String.valueOf(manager.id());
+        return String.valueOf(manager.managerId());
     }
 
     @Override

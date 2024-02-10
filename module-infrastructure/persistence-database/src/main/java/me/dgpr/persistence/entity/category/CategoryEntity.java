@@ -7,9 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import me.dgpr.persistence.config.BaseEntity;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "category")
+@SQLDelete(sql = "UPDATE category SET deleted_at = NOW() WHERE category_id = ?")
+@Where(clause = "deleted_at is NULL")
 public class CategoryEntity extends BaseEntity {
 
     @Id

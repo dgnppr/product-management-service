@@ -44,7 +44,7 @@ class QueryManagerByIdTest {
         Manager actual = sut.query(query);
 
         //Assert
-        assertThat(actual.id()).isEqualTo(managerId);
+        assertThat(actual.managerId()).isEqualTo(managerId);
     }
 
 }

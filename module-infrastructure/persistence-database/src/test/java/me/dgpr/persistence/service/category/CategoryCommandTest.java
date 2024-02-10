@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import me.dgpr.persistence.entity.category.CategoryEntity;
-import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.category.CategoryCommand.CreateCategory;
@@ -36,12 +33,12 @@ class CategoryCommandTest {
     private CategoryCommand sut;
 
     @Test
-    void 존재하지_않는_가게_아이디로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
+    void 존재하지_않는_가게_id로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
         //Arrange
         var notExistingStoreId = -1L;
 
-        when(storeRepository.findById(eq(notExistingStoreId)))
-                .thenReturn(Optional.empty());
+        when(storeRepository.existsById(eq(notExistingStoreId)))
+                .thenReturn(false);
 
         CreateCategory command = new CreateCategory(
                 notExistingStoreId,
@@ -61,8 +58,8 @@ class CategoryCommandTest {
         var storeId = 1L;
         var categoryName = "name";
 
-        when(storeRepository.findById(eq(storeId)))
-                .thenReturn(Optional.of(mock(StoreEntity.class)));
+        when(storeRepository.existsById(eq(storeId)))
+                .thenReturn(true);
 
         var expected = CategoryEntity.create(
                 storeId,
