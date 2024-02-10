@@ -15,8 +15,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import me.dgpr.domains.manager.domain.Manager;
+import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
-import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase.Query;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -37,16 +37,23 @@ class JwtTokenFilterTest {
     private JwtTokenHandler jwtTokenHandler;
     @Mock
     private QueryManagerByIdUseCase queryManagerByIdUseCase;
+    @Mock
+    private QueryLogoutByIdUseCase queryLogoutByIdUseCase;
 
     private JwtTokenFilter sut;
 
     @BeforeEach
     void setUp() {
-        sut = new JwtTokenFilter(secretKey, jwtTokenHandler, queryManagerByIdUseCase);
+        sut = new JwtTokenFilter(
+                secretKey,
+                jwtTokenHandler,
+                queryManagerByIdUseCase,
+                queryLogoutByIdUseCase
+        );
     }
 
     @Test
-    void http_헤더에_토큰이_존재하지_않으면_검증하지_않고_다음_필터로_넘어간다() throws Exception {
+    void http_헤더에_토큰이_존재하지_않으면_authentication을_저장하지_않는다() throws Exception {
         //Arrange
         var req = mock(HttpServletRequest.class);
         var res = mock(HttpServletResponse.class);
@@ -65,7 +72,7 @@ class JwtTokenFilterTest {
     }
 
     @Test
-    void 유효한_토큰이_아니면_id를_조회하지_않고_다음_필터로_넘어간다() throws Exception {
+    void 유효한_토큰이_아니면_authentication을_저장하지_않는다() throws Exception {
         //Arrange
         var req = mock(HttpServletRequest.class);
         var res = mock(HttpServletResponse.class);
@@ -90,7 +97,7 @@ class JwtTokenFilterTest {
         verify(queryManagerByIdUseCase, never()).query(any());
         verify(chain, times(1)).doFilter(req, res);
     }
-    
+
     @Test
     void 토큰에서_추출한_id로_manager를_조회하여_authentication을_저장한다() throws Exception {
         // Arrange
@@ -110,8 +117,11 @@ class JwtTokenFilterTest {
         ))
                 .thenReturn(1L);
 
-        when(queryManagerByIdUseCase.query(any(Query.class)))
+        when(queryManagerByIdUseCase.query(any(QueryManagerByIdUseCase.Query.class)))
                 .thenReturn(manager);
+
+        when(queryLogoutByIdUseCase.query(any(QueryLogoutByIdUseCase.Query.class)))
+                .thenReturn(false);
 
         // Act
         sut.doFilterInternal(request, response, chain);
@@ -125,5 +135,38 @@ class JwtTokenFilterTest {
         assertThat(actual.getManager()).isEqualTo(manager);
 
         SecurityContextHolder.clearContext();
+    }
+
+    @Test
+    void 로그아웃된_토큰이면_authentication을_저장하지_않는다() throws Exception {
+        //Arrange
+        String token = "token";
+        Manager manager = mock(Manager.class);
+
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain chain = mock(FilterChain.class);
+
+        when(request.getHeader(HttpHeaders.AUTHORIZATION))
+                .thenReturn(token);
+
+        when(jwtTokenHandler.verifyAndGetIdFromToken(
+                anyString(),
+                anyString()
+        ))
+                .thenReturn(1L);
+
+        when(queryManagerByIdUseCase.query(any(QueryManagerByIdUseCase.Query.class)))
+                .thenReturn(manager);
+
+        when(queryLogoutByIdUseCase.query(any(QueryLogoutByIdUseCase.Query.class)))
+                .thenReturn(true);
+
+        //Act
+        sut.doFilterInternal(request, response, chain);
+
+        //Assert
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assertThat(authentication).isNull();
     }
 }

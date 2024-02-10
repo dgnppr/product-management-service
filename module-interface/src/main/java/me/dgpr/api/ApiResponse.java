@@ -18,6 +18,14 @@ public record ApiResponse<T>(
         );
     }
 
+    public static <T> ApiResponse<T> ok() {
+        return of(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                null
+        );
+    }
+
     public static <T> ApiResponse<T> ok(T data) {
         return of(
                 HttpStatus.OK.value(),
@@ -41,7 +49,7 @@ public record ApiResponse<T>(
                 null
         );
     }
-    
+
     public static <T> ApiResponse<T> notFound(String errMessage) {
         return of(
                 HttpStatus.NOT_FOUND.value(),

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import me.dgpr.api.auth.dto.LoginRequest;
@@ -13,6 +14,7 @@ import me.dgpr.config.security.JwtTokenHandler;
 import me.dgpr.config.security.JwtTokenProperties;
 import me.dgpr.domains.manager.exception.InvalidPasswordException;
 import me.dgpr.domains.manager.usecase.LoginManagerUseCase;
+import me.dgpr.domains.manager.usecase.LogoutManagerUseCase;
 import me.dgpr.fixture.manager.ManagerFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -28,6 +30,9 @@ class AuthServiceTest {
 
     @Mock
     private LoginManagerUseCase loginManagerUseCase;
+
+    @Mock
+    private LogoutManagerUseCase logoutManagerUseCase;
 
     @Mock
     private JwtTokenHandler jwtTokenHandler;
@@ -93,5 +98,30 @@ class AuthServiceTest {
                 InvalidPasswordException.class,
                 () -> sut.login(request)
         );
+    }
+
+    @Test
+    void 토큰에서_id를_추출하여_로그아웃_토큰을_저장한다() {
+        //Arrange
+        var token = "token";
+        var secretKey = "secretKey";
+        var managerId = 1L;
+
+        when(jwtTokenProperties.getExpirationTime())
+                .thenReturn(1000L);
+
+        when(jwtTokenProperties.getSecretKey())
+                .thenReturn(secretKey);
+
+        when(jwtTokenHandler.verifyAndGetIdFromToken(
+                eq(secretKey),
+                eq(token)
+        )).thenReturn(managerId);
+
+        //Act
+        sut.logout(token);
+
+        //Assert
+        verify(logoutManagerUseCase).command(any());
     }
 }

@@ -3,6 +3,7 @@ package me.dgpr.config.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.List;
+import me.dgpr.domains.manager.usecase.QueryLogoutByIdUseCase;
 import me.dgpr.domains.manager.usecase.QueryManagerByIdUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,17 +26,20 @@ public class CustomSecurityConfig {
     private final ObjectMapper objectMapper;
     private final JwtTokenHandler jwtTokenHandler;
     private final QueryManagerByIdUseCase queryManagerByIdUseCase;
+    private final QueryLogoutByIdUseCase queryLogoutByIdUseCase;
 
     public CustomSecurityConfig(
             JwtTokenProperties jwtTokenProperties,
             ObjectMapper objectMapper,
             JwtTokenHandler jwtTokenHandler,
-            QueryManagerByIdUseCase queryManagerByIdUseCase
+            QueryManagerByIdUseCase queryManagerByIdUseCase,
+            QueryLogoutByIdUseCase queryLogoutByIdUseCase
     ) {
         this.jwtTokenProperties = jwtTokenProperties;
         this.objectMapper = objectMapper;
         this.jwtTokenHandler = jwtTokenHandler;
         this.queryManagerByIdUseCase = queryManagerByIdUseCase;
+        this.queryLogoutByIdUseCase = queryLogoutByIdUseCase;
     }
 
     @Bean
@@ -57,7 +61,8 @@ public class CustomSecurityConfig {
                         new JwtTokenFilter(
                                 jwtTokenProperties.getSecretKey(),
                                 jwtTokenHandler,
-                                queryManagerByIdUseCase
+                                queryManagerByIdUseCase,
+                                queryLogoutByIdUseCase
                         ), UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(
