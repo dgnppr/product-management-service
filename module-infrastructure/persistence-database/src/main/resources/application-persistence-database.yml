@@ -8,10 +8,13 @@ spring:
       on-profile: local
 
   datasource:
-    driverClassName: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/product-management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
 
   jpa:
-    database: h2
+    database: mysql
     show-sql: true
     generate-ddl: true
     hibernate:
