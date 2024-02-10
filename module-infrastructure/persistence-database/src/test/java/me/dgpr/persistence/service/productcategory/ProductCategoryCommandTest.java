@@ -4,13 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import java.util.Set;
-import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.productcategory.ProductCategoryEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.product.ProductRepository;
@@ -48,8 +45,8 @@ class ProductCategoryCommandTest {
         var productId = 1L;
         var categoryIds = Set.of(1L, 2L, 3L);
 
-        when(productRepository.findById(productId))
-                .thenReturn(Optional.of(mock(ProductEntity.class)));
+        when(productRepository.existsById(eq(productId)))
+                .thenReturn(true);
 
         when(categoryRepository.countByIdIn(categoryIds))
                 .thenReturn(categoryIds.size());
@@ -80,8 +77,8 @@ class ProductCategoryCommandTest {
     void 존재하지_않는_상품_id로_ProductCategory_엔티티를_생성할_시_NotFoundProductException_예외_발생() {
         //Arrange
         var notExistingProductId = -1L;
-        when(productRepository.findById(eq(notExistingProductId)))
-                .thenReturn(Optional.empty());
+        when(productRepository.existsById(eq(notExistingProductId)))
+                .thenReturn(false);
 
         var command = new CreateProductCategory(
                 notExistingProductId,
@@ -98,8 +95,8 @@ class ProductCategoryCommandTest {
     @Test
     void 존재하지_않는_카테고리_id_set로_ProductCategory_엔티티를_생성할_시_NotFoundCategoryException_예외_발생() {
         //Arrange
-        when(productRepository.findById(any()))
-                .thenReturn(Optional.of(mock(ProductEntity.class)));
+        when(productRepository.existsById(any()))
+                .thenReturn(true);
 
         var notExistingCategoryIds = Set.of(1L, 2L, 3L);
 

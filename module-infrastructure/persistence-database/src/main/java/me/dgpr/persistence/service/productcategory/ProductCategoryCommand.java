@@ -33,10 +33,9 @@ public class ProductCategoryCommand {
 
     public int createProductCategory(final CreateProductCategory command) {
         // 1. 상품 ID로 상품 조회
-        productRepository.findById(command.productId())
-                .orElseThrow(
-                        () -> new NotFoundProductException(String.valueOf(command.productId()))
-                );
+        if (!productRepository.existsById(command.productId())) {
+            throw new NotFoundProductException(String.valueOf(command.productId()));
+        }
 
         // 2. 카테고리 ID Set으로 카테고리 조회
         Set<Long> categoryIds = command.categoryIds.stream()
