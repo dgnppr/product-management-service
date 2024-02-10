@@ -20,4 +20,14 @@ public class StoreQuery {
         return storeRepository.findById(storeId)
                 .orElseThrow(() -> new NotFoundStoreException(String.valueOf(storeId)));
     }
+
+    public boolean existsByIdAndManagerId(
+            final long storeId,
+            final long managerId
+    ) {
+        return storeRepository.existsByIdAndManagerId(
+                storeId,
+                managerId
+        );
+    }
 }

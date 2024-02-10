@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import me.dgpr.persistence.entity.category.CategoryEntity;
-import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.category.CategoryCommand.CreateCategory;
@@ -61,8 +58,8 @@ class CategoryCommandTest {
         var storeId = 1L;
         var categoryName = "name";
 
-        when(storeRepository.findById(eq(storeId)))
-                .thenReturn(Optional.of(mock(StoreEntity.class)));
+        when(storeRepository.existsById(eq(storeId)))
+                .thenReturn(true);
 
         var expected = CategoryEntity.create(
                 storeId,
