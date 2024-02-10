@@ -8,14 +8,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import java.util.Set;
-import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.productname.ProductNameRepository;
 import me.dgpr.persistence.service.product.exception.NotFoundProductException;
-import me.dgpr.persistence.service.productname.ProductNameCommand.CreateCommand;
+import me.dgpr.persistence.service.productname.ProductNameCommand.CreateProductNames;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -42,18 +40,17 @@ class ProductNameCommandTest {
         //Arrange
         var notExistingProductId = -1L;
 
-        when(productRepository.findById(eq(notExistingProductId)))
-                .thenReturn(Optional.empty());
+        when(productRepository.existsById(eq(notExistingProductId)))
+                .thenReturn(false);
 
-        CreateCommand command = new CreateCommand(
-                notExistingProductId,
-                Set.of("아이스", "녹차", "라떼")
-        );
+        var command = mock(CreateProductNames.class);
+        when(command.productId())
+                .thenReturn(notExistingProductId);
 
         //Act //Assert
-        assertThrows(NotFoundProductException.class, () -> sut.createProductNames(
-                command
-        ));
+        assertThrows(NotFoundProductException.class,
+                () -> sut.createProductNames(command)
+        );
     }
 
     @Test
@@ -61,13 +58,13 @@ class ProductNameCommandTest {
         //Arrange
         var productId = 1L;
         var dividedProductName = Set.of("아이스", "녹차", "라떼");
-        var command = new CreateCommand(
+        var command = new CreateProductNames(
                 productId,
                 dividedProductName
         );
 
-        when(productRepository.findById(eq(productId)))
-                .thenReturn(Optional.of(mock(ProductEntity.class)));
+        when(productRepository.existsById(eq(productId)))
+                .thenReturn(true);
 
         var productNames = dividedProductName.stream()
                 .map(name ->

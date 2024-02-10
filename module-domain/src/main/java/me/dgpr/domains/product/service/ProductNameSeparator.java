@@ -1,4 +1,4 @@
-package me.dgpr.domains.product.util;
+package me.dgpr.domains.product.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
