@@ -76,7 +76,7 @@
 
 > ddl 파일은 `ddl` 디렉토리에 위치
 
-![Screenshot 2024-02-12 at 02 25 18](https://github.com/dgnppr/product-management-service/assets/89398909/89ca2d8a-bed4-42d3-8f1c-ce31a5c77378)
+![Screenshot 2024-02-12 at 03 32 49](https://github.com/dgnppr/product-management-service/assets/89398909/e0529e47-f9b6-416b-b5fd-6bc6f75ded1d)
 
 - 사장님은 N개의 가게를 가질 수 있다.
 - 가게에는 N개의 상품을 가질 수 있다.
