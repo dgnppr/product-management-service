@@ -4,26 +4,27 @@
 
 ## Table of Contents
 
-- [상품 관리 서비스](#상품-관리-서비스)
-    - [기술 스택](#기술-스택)
-    - [터미널 실행 순서](#터미널-실행-순서)
-    - [기능 및 요구 사항](#기능-및-요구-사항)
-    - [DB 모델링](#db-모델링)
-    - [백엔드 모듈 구성](#백엔드-모듈-구성)
-    - [API 디자인 설계](#api-디자인-설계)
-    - [APIs](#apis)
-        - [회원가입](#1-회원가입)
-        - [로그인](#2-로그인)
-        - [로그아웃](#3-로그아웃)
-        - [가게 등록](#4-가게-등록)
-        - [카테고리 등록](#5-카테고리-등록)
-        - [상품 등록](#6-상품-등록)
-        - [상품 수정](#7-상품-수정)
-        - [상품 삭제](#8-상품-삭제)
-        - [상품 리스트 조회](#9-상품-리스트-조회)
-        - [상품 상세 조회](#10-상품-상세-조회)
-        - [상품 검색](#11-상품-검색)
-    - [고민했던 부분](#고민했던-부분)
+- [기술 스택](#기술-스택)
+- [터미널 실행 순서](#터미널-실행-순서)
+- [기능 및 요구 사항](#기능-및-요구-사항)
+- [DB 모델링](#db-모델링)
+- [백엔드 모듈 구성](#백엔드-모듈-구성)
+- [API 디자인 설계](#api-디자인-설계)
+- [APIs](#apis)
+    - [회원가입](#1-회원가입)
+    - [로그인](#2-로그인)
+    - [로그아웃](#3-로그아웃)
+    - [가게 등록](#4-가게-등록)
+    - [카테고리 등록](#5-카테고리-등록)
+    - [상품 등록](#6-상품-등록)
+    - [상품 수정](#7-상품-수정)
+    - [상품 삭제](#8-상품-삭제)
+    - [상품 리스트 조회](#9-상품-리스트-조회)
+    - [상품 상세 조회](#10-상품-상세-조회)
+    - [상품 검색](#11-상품-검색)
+- [고민했던 부분](#고민했던-부분)
+    - [JWT 인증/인가 시스템 로그아웃 처리](#jwt-인증인가-시스템-로그아웃-처리)
+    - [초성 검색 지원](#초성-검색-지원)
 
 ---
 
@@ -251,7 +252,6 @@ HTTP/1.1 200 OK
 POST http://localhost:8080/v1/stores
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2Njk4NTMsImV4cCI6MTcwODUzMzg1M30.rZ031qNQy7tNSflR06NROdxBLu_ipkc_oM6HbntlqBU
-# fill in token to Authorization header
 
 {
   "companyRegistrationNumber": "861-81-01475",
@@ -623,6 +623,84 @@ JWT의 만료 시간만큼 Redis에 토큰을 저장해두고, TTL 기능을 사
 JWT를 검증할 때 만료 시간이 지나면 레디스에서 토큰을 조회하는 단계까지 않아도 된다. 또한 블랙리스트를 RDB에서 관리하지 않아도 되고, 추후에 토큰이 쌓여서 검색 속도가
 느려지는 문제를 예방할 수 있었다.
 
+로그아웃을 클라이언트가 요청하면 redis에 토큰을 저장한다.
+
+```java
+
+@Service
+public class LogoutManager implements LogoutManagerUseCase {
+
+    public static final String KEY_PREFIX = "logout:";
+    private final RedisService logoutRedisService;
+
+    public LogoutManager(final RedisService logoutRedisService) {
+        this.logoutRedisService = logoutRedisService;
+    }
+
+    @Override
+    public void command(final Command command) {
+        String key = generateLogoutKey(command.managerId());
+
+        Set<String> logoutTokens = safelyGetLogoutTokens(key);
+
+        logoutTokens.add(command.token());
+
+        logoutRedisService.set(
+                key,
+                logoutTokens,
+                command.duration()
+        );
+    }
+
+    private Set<String> safelyGetLogoutTokens(final String key) {
+        Object result = logoutRedisService.get(key, Set.class).orElse(null);
+
+        if (result instanceof Set) {
+            return new HashSet<>((Set<String>) result);
+        }
+
+        return new HashSet<>();
+    }
+
+    public static String generateLogoutKey(final Long id) {
+        return KEY_PREFIX + id;
+    }
+}
+```
+
+<br>
+
+그리고 매 요청마다 Redis에 저장된 토큰을 조회하여 만료된 토큰인지 확인한다.
+
+```java
+
+@Service
+public class QueryLogoutByToken implements QueryLogoutByTokenUseCase {
+
+    private final RedisService redisService;
+
+    public QueryLogoutByToken(final RedisService redisService) {
+        this.redisService = redisService;
+    }
+
+    @Override
+    public boolean query(final Query query) {
+        String logoutKey = generateLogoutKey(query.managerId());
+
+        return safelyGetLogoutTokens(logoutKey).contains(query.token());
+    }
+
+    private Set<String> safelyGetLogoutTokens(final String key) {
+        Object result = redisService.get(key, Set.class).orElse(null);
+
+        if (result instanceof Set) {
+            return new HashSet<>((Set<String>) result);
+        }
+
+        return new HashSet<>();
+    }
+}
+```
 
 <br>
 
