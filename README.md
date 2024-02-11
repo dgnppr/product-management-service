@@ -25,6 +25,7 @@
 - [고민했던 부분](#고민했던-부분)
     - [JWT 인증/인가 시스템 로그아웃 처리](#jwt-인증인가-시스템-로그아웃-처리)
     - [초성 검색 지원](#초성-검색-지원)
+    - [상품 카테고리 조회](#상품-카테고리-조회)
 
 ---
 
@@ -711,9 +712,80 @@ public class QueryLogoutByToken implements QueryLogoutByTokenUseCase {
 그래서 어플리케이션 단에서 초성 검색을 지원해야했고, 이를 위해서 어떻게 해야할까 고민했다.
 고민한 결과 상품을 등록할 때, 상품 이름을 초성으로 분리해서 별도의 테이블로 저장하는 방법을 선택했다.
 
-이 방법의 문제점은 사장님이 상품 이름을 수정할 때마다 별도의 테이블도 함께 수정해줘야 한다는 점이다. 그럼에도 이 방법을 선택한 이유는 상품을 수정하는 것보다 초성 검색과
-like 조회 연산이 훨씬 더 많을 것이라고 생각했다.
+**이 방법의 문제점은 사장님이 상품 이름을 수정할 때마다 별도의 테이블도 함께 수정해줘야 한다는 점이다. 그럼에도 이 방법을 선택한 이유는 상품을 수정하는 것보다 초성 검색과
+like 조회 연산이 훨씬 더 많을 것이라고 생각했다.**
 
 읽기 성능을 위해서 쓰기 성능을 희생하는 방법을 선택했다. 읽기 성능을 최적화 하기 위해서 상품 아이디와 상품 이름을 인덱싱하였다.
 
 <br>
+
+### 상품 카테고리 조회
+
+상품을 페이지네이션으로 조회할 때 상품의 카테고리도 함께 조회하는 API를 구현하던 중에 어떻게 해야 쿼리를 최적화할 수 있을까 고민했다.
+
+고민한 결과 상품을 조회할 때 카테고리도 함께 조회하는 것보다 상품을 조회한 후에 카테고리를 조회하는 것이 더 나은 방법이라고 생각했다.
+
+그 이유는 상품을 조회할 때 카테고리도 함께 조회하면 상품을 조회하는 쿼리와 카테고리를 조회하는 쿼리가 함께 실행되어야 하기 때문이다.
+
+정확히는 카테고리 조회하는 쿼리가 서브 쿼리로 동작해야 하는데 쿼리 복잡도가 꽤 올라간다.
+
+그래서 먼저, 상품을 조회한 후 상품이 속한 카테고리를 조회해서 그루핑하는 방식을 생각했다.
+
+```java
+public Page<ProductWithCategoriesDTO> findAllByStoreId(
+        final long storeId,
+        final Pageable pageable
+) {
+    // 가게에 등록된 상품 조회
+    Page<ProductEntity> products = productRepository.findAllByStoreId(
+            storeId,
+            pageable
+    );
+
+    // Product ID 목록 추출
+    Set<Long> productIds = products.stream()
+            .map(ProductEntity::getId)
+            .collect(Collectors.toSet());
+
+    // 상품 ID 목록으로 카테고리 목록 조회
+    List<ProductCategoryDTO> productCategoryDTOs = productCategoryRepository.findByProductIdIn(
+            productIds);
+
+    Map<Long, Set<String>> productIdToCategoryNames = productCategoryDTOs.stream()
+            .collect(Collectors.groupingBy(
+                    ProductCategoryDTO::productId,
+                    Collectors.mapping(
+                            ProductCategoryDTO::categoryName,
+                            Collectors.toSet()
+                    )
+            ));
+
+    List<ProductWithCategoriesDTO> dtos = products.getContent().stream()
+            .map(product -> new ProductWithCategoriesDTO(
+                    product.getId(),
+                    product.getStoreId(),
+                    product.getPrice(),
+                    product.getCost(),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getBarcode(),
+                    product.getExpirationDate(),
+                    product.getSize(),
+                    productIdToCategoryNames.getOrDefault(product.getId(), new HashSet<>())
+            ))
+            .toList();
+
+    return new PageImpl<>(dtos, pageable, products.getTotalElements());
+
+}
+```
+
+동작과정은 아래와 같다.
+
+1. 우선 상품 테이블에서 가게에 속한 상품을 조회해서 가져온다.
+2. 상품-카테고리 테이블에서 카테고리와 조인해서 DTO로 가져온다.
+3. 상품 아이디를 기준으로 카테고리를 그루핑한다.
+
+1,2번에서 쿼리가 발생하게 되는데, 이 부분은 인덱싱을 통해서 최적화할 수 있고, 어플리케이션 단에서 코드도 간결하게 작성할 수 있다.
+
+한 방 쿼리보다 이런식으로 2번의 쿼리를 실행하되, 인덱싱을 사용하고 비교적 간단하기에 이 방법을 선택했다.
