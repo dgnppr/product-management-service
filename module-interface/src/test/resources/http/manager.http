@@ -2,7 +2,6 @@
 POST http://localhost:8080/v1/managers
 Content-Type: application/json
 
-
 {
   "phoneNumber": "01012345678",
   "password": "password"

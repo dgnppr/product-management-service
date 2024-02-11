@@ -6,7 +6,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 {
   "price": 10000,
   "cost": 5000,
-  "name": "name1 name2 name3",
+  "name": "아이스 카페 라떼",
   "description": "description",
   "barcode": "1234567890",
   "expirationDate": "2024-12-31T00:00:00",
@@ -42,15 +42,13 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 {
   "price": 20000,
   "cost": 10000,
-  "name": "name3 name4",
+  "name": "아이스 바닐라 라떼",
   "description": "description",
   "barcode": "1234567890",
   "expirationDate": "2024-12-31T00:00:00",
   "size": "LARGE",
   "categoryIds": [
-    1,
-    2,
-    3
+    1
   ]
 }
 
@@ -100,7 +98,7 @@ GET http://localhost:8080/v1/stores/1/products/1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
-### 상품 이름 조회 - 성공
-GET http://localhost:8080/v1/stores/1/products/search?name=name1
+### 상품 이름 조회 초성 - 성공
+GET http://localhost:8080/v1/stores/1/products/search?name=ㅂㄴㄹ
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY

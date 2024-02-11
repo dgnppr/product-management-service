@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     @Query("SELECT pe "
             + "FROM ProductEntity pe "
-            + "JOIN ProductNameEntity pne on pe.id = pne.id "
+            + "JOIN ProductNameEntity pne on pe.id = pne.productId "
             + "WHERE pe.storeId = :storeId AND (pe.name LIKE :name% OR pne.name LIKE :name%)")
     List<ProductEntity> findByStoreIdAndName(
             @Param("storeId") long storeId,

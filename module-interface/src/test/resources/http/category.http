@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
 {
-  "name": "meal"
+  "name": "음료"
 }
 
 ### 카테고리 등록 - 실패 (BAD_REQUEST)

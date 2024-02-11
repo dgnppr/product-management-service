@@ -5,8 +5,8 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 # fill in token to Authorization header
 
 {
-  "companyRegistrationNumber": "1234-567-890",
-  "businessName": "businessName"
+  "companyRegistrationNumber": "861-81-01475",
+  "businessName": "바닐라 카페"
 }
 
 ### 가게 등록 - 실패
