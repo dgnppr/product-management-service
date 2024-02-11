@@ -2,9 +2,11 @@ package me.dgpr.api.product;
 
 import me.dgpr.api.ApiResponse;
 import me.dgpr.api.product.dto.CreateProductRequest;
+import me.dgpr.api.product.dto.UpdateProductRequest;
 import me.dgpr.config.security.CurrentManager;
 import me.dgpr.config.security.ManagerContext;
 import me.dgpr.domains.product.usecase.CreateProductUseCase;
+import me.dgpr.domains.product.usecase.UpdateProductUseCase;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductRestController {
 
     private final CreateProductUseCase createProductUseCase;
+    private final UpdateProductUseCase updateProductUseCase;
 
-    public ProductRestController(CreateProductUseCase createProductUseCase) {
+    public ProductRestController(
+            CreateProductUseCase createProductUseCase,
+            UpdateProductUseCase updateProductUseCase
+    ) {
         this.createProductUseCase = createProductUseCase;
+        this.updateProductUseCase = updateProductUseCase;
     }
 
     @PostMapping("/v1/stores/{storeId}/products")
@@ -31,5 +38,22 @@ public class ProductRestController {
                 storeId
         ));
         return ApiResponse.created();
+    }
+
+    @PostMapping("/v1/stores/{storeId}/products/{productId}/update")
+    public ApiResponse<Void> updateProduct(
+            @CurrentManager final ManagerContext managerContext,
+            @PathVariable("storeId") final long storeId,
+            @PathVariable("productId") final long productId,
+            @Validated @RequestBody final UpdateProductRequest request
+    ) {
+        updateProductUseCase.command(
+                request.toCommand(
+                        productId,
+                        managerContext.getId(),
+                        storeId
+                )
+        );
+        return ApiResponse.ok();
     }
 }

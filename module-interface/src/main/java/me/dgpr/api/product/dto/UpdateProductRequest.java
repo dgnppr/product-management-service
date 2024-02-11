@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
-import me.dgpr.domains.product.usecase.CreateProductUseCase.Command;
+import me.dgpr.domains.product.usecase.UpdateProductUseCase.Command;
 
-public record CreateProductRequest(
+public record UpdateProductRequest(
         @NotNull(message = "가격은 필수입니다.")
         @DecimalMin(value = "0.0", message = "가격은 0 이상이어야 합니다.")
         BigDecimal price,
@@ -32,7 +32,7 @@ public record CreateProductRequest(
         @NotNull(message = "유통기한은 필수입니다.")
         LocalDateTime expirationDate,
 
-        @NotNull(message = "사이즈는 필수입니다. (ex. SMALL, LARGE)")
+        @NotNull(message = "사이즈는 필수입니다. (허용값. SMALL, LARGE)")
         String size,
 
         @NotNull(message = "카테고리 ID 목록은 필수입니다.")
@@ -41,10 +41,12 @@ public record CreateProductRequest(
 ) {
 
     public Command toCommand(
+            final long productId,
             final long managerId,
             final long storeId
     ) {
         return new Command(
+                productId,
                 managerId,
                 storeId,
                 price,
@@ -57,4 +59,5 @@ public record CreateProductRequest(
                 categoryIds
         );
     }
+
 }

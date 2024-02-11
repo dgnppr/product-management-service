@@ -60,11 +60,41 @@ public class ProductCategoryCommand {
         return productCategoryRepository.saveAll(productCategories).size();
     }
 
+    public int deleteProductCategory(final DeleteProductCategory command) {
+        // 1. 상품 ID로 상품 조회
+        if (!productRepository.existsById(command.productId())) {
+            throw new NotFoundProductException(String.valueOf(command.productId()));
+        }
+
+        // 2. 카테고리 ID Set으로 카테고리 조회
+        Set<Long> categoryIds = command.categoryIds.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        int categoryCounts = categoryRepository.countByIdIn(categoryIds);
+        if (!Objects.equals(categoryCounts, command.categoryIds().size())) {
+            throw new NotFoundCategoryException(String.valueOf(command.categoryIds()));
+        }
+
+        // 3. 상품 카테고리 리스트 삭제
+        return productCategoryRepository.deleteAllByProductIdAndCategoryIdIn(
+                command.productId(),
+                command.categoryIds()
+        );
+    }
+
     public void deleteAllByProductId(final long productId) {
         productCategoryRepository.deleteAllByProductId(productId);
     }
 
     public record CreateProductCategory(
+            long productId,
+            Set<Long> categoryIds
+    ) {
+
+    }
+
+    public record DeleteProductCategory(
             long productId,
             Set<Long> categoryIds
     ) {
