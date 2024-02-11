@@ -50,7 +50,7 @@ class ProductCategoryQueryTest {
     }
 
     @Test
-    void 존재하지_않는_카테고리_id로_엔티티_조회시_NotFoundCategoryException_예외_발생() {
+    void 존재하지_않는_카테고리_id로_엔티티_조회시_NotFoundException_예외_발생() {
         //Arrange
 
         //Act

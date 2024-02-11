@@ -1,6 +1,6 @@
 package me.dgpr.domains.category.service;
 
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.persistence.service.store.StoreQuery;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,10 @@ public class CategoryService {
                 storeId,
                 managerId)
         ) {
-            throw new PermissionDeniedException("Manager does not have permission");
+            throw new PermissionDeniedException(
+                    "Store",
+                    String.format("storeId=%d, managerId=%d", storeId, managerId)
+            );
         }
     }
 }

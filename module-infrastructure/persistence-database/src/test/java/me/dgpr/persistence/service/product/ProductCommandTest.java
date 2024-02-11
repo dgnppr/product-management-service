@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
@@ -17,7 +18,6 @@ import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.product.ProductCommand.CreateProduct;
 import me.dgpr.persistence.service.product.ProductCommand.UpdateProduct;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -40,14 +40,14 @@ class ProductCommandTest {
     private ProductCommand sut;
 
     @Test
-    void 존재하지_않는_가게_아이디로_새로운_Product_엔티티를_만들경우_NotFoundStoreException_예외_발생() {
+    void 존재하지_않는_가게_아이디로_새로운_Product_엔티티를_만들경우_NotFoundException_예외_발생() {
         //Arrange
         when(storeRepository.existsById(any()))
                 .thenReturn(false);
 
         //Act //Assert
         assertThrows(
-                NotFoundStoreException.class,
+                NotFoundException.class,
                 () -> sut.createNewProduct(createCommand())
         );
     }

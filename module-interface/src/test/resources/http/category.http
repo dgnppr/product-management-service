@@ -1,7 +1,7 @@
 ### 카테고리 등록 - 성공
 POST http://localhost:8080/v1/stores/1/categories
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
 
 {
   "name": "bread"
@@ -10,7 +10,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 ### 카테고리 등록 - 실패 (BAD_REQUEST)
 POST http://localhost:8080/v1/stores/1/categories
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
 
 {
   "name": ""

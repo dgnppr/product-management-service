@@ -1,9 +1,9 @@
 package me.dgpr.persistence.service.category;
 
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.category.CategoryEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class CategoryCommand {
     public CategoryEntity createNewCategory(final CreateCategory command) {
 
         if (!storeRepository.existsById(command.storeId())) {
-            throw new NotFoundStoreException(String.valueOf(command.storeId()));
+            throw new NotFoundException("가게", String.valueOf(command.storeId()));
         }
 
         CategoryEntity categoryEntity = CategoryEntity.create(

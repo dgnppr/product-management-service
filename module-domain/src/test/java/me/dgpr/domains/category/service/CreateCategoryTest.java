@@ -6,12 +6,12 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.NotFoundException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.domains.category.domain.Category;
 import me.dgpr.domains.category.usecase.CreateCategoryUseCase.Command;
 import me.dgpr.persistence.entity.category.CategoryEntity;
 import me.dgpr.persistence.service.category.CategoryCommand;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -67,7 +67,7 @@ class CreateCategoryTest {
     }
 
     @Test
-    void 존재하지_않는_가게_id를_사용하여_카테고리를_생성할_시_NotFoundStoreException_예외_발생() {
+    void 존재하지_않는_가게_id를_사용하여_카테고리를_생성할_시_NotFoundException_예외_발생() {
         //Arrange
         var managerId = 1L;
         var notExistStoreId = 1L;
@@ -85,11 +85,15 @@ class CreateCategoryTest {
         );
 
         when(categoryCommand.createNewCategory(createCategory))
-                .thenThrow(new NotFoundStoreException(String.valueOf(notExistStoreId)));
+                .thenThrow(new NotFoundException(
+                                "가게",
+                                String.valueOf(notExistStoreId)
+                        )
+                );
 
         //Act & Assert
         assertThrows(
-                NotFoundStoreException.class,
+                NotFoundException.class,
                 () -> sut.command(command)
         );
     }
@@ -107,7 +111,10 @@ class CreateCategoryTest {
                 categoryName
         );
 
-        doThrow(new PermissionDeniedException("Manager does not have permission"))
+        doThrow(new PermissionDeniedException(
+                "Store",
+                "Manager does not have permission")
+        )
                 .when(categoryService)
                 .verifyManagerPermission(
                         managerWhoNotStoreOwnerId,

@@ -12,6 +12,4 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
             + "FROM CategoryEntity ce "
             + "WHERE ce.id IN :categoryIds")
     int countByIdIn(@Param("categoryIds") Set<Long> categoryIds);
-
-    int existsByIdIn(Set<Long> ids);
 }

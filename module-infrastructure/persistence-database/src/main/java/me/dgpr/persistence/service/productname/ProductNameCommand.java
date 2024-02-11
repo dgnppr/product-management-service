@@ -2,10 +2,10 @@ package me.dgpr.persistence.service.productname;
 
 import java.util.List;
 import java.util.Set;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.productname.ProductNameRepository;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +27,10 @@ public class ProductNameCommand {
     public int createProductNames(final CreateProductNames command) {
         // 1. 상품 ID로 상품 조회
         if (!productRepository.existsById(command.productId())) {
-            throw new NotFoundProductException(String.valueOf(command.productId()));
+            throw new NotFoundException(
+                    "상품",
+                    String.valueOf(command.productId())
+            );
         }
 
         // 2. 상품 이름 생성
