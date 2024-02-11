@@ -69,3 +69,20 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
   "categoryIds": [
   ]
 }
+
+### 상품 삭제 - 성공
+POST http://localhost:8080/v1/stores/1/products/1/delete
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+}
+
+
+### 상품 삭제 - 실패 (BAD_REQUEST)
+POST http://localhost:8080/v1/stores/null/products/null/delete
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+}
