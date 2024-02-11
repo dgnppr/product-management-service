@@ -12,7 +12,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
   "expirationDate": "2024-12-31T00:00:00",
   "size": "SMALL",
   "categoryIds": [
-    2
+    1
   ]
 }
 

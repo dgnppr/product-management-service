@@ -3,7 +3,7 @@ package me.dgpr.common.exception;
 public class NotFoundException extends RuntimeException {
 
     private static final String LOG_FORMAT = "could not find %s [param=%s]";
-    private static final String MESSAGE_FORMAT = "%s %s가 존재하지 않습니다.";
+    private static final String MESSAGE_FORMAT = "%s %s 가 존재하지 않습니다.";
     private final String target;
     private final String param;
 
