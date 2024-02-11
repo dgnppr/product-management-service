@@ -50,7 +50,7 @@ public class CreateProduct implements CreateProductUseCase {
 
         // 3. productCategories 저장
         CreateProductCategory createProductCategory = createProductCategoryCommand(
-                newProduct,
+                newProduct.getId(),
                 command.categoryIds()
         );
         productCategoryCommand.createProductCategory(createProductCategory);
@@ -75,11 +75,11 @@ public class CreateProduct implements CreateProductUseCase {
     }
 
     private CreateProductCategory createProductCategoryCommand(
-            final ProductEntity newProduct,
+            final long productId,
             final Set<Long> categoryIds
     ) {
         return new CreateProductCategory(
-                newProduct.getId(),
+                productId,
                 categoryIds
         );
     }

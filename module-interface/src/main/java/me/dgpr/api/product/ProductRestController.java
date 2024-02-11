@@ -6,6 +6,8 @@ import me.dgpr.api.product.dto.UpdateProductRequest;
 import me.dgpr.config.security.CurrentManager;
 import me.dgpr.config.security.ManagerContext;
 import me.dgpr.domains.product.usecase.CreateProductUseCase;
+import me.dgpr.domains.product.usecase.DeleteProductUseCase;
+import me.dgpr.domains.product.usecase.DeleteProductUseCase.Command;
 import me.dgpr.domains.product.usecase.UpdateProductUseCase;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,13 +20,16 @@ public class ProductRestController {
 
     private final CreateProductUseCase createProductUseCase;
     private final UpdateProductUseCase updateProductUseCase;
+    private final DeleteProductUseCase deleteProductUseCase;
 
     public ProductRestController(
             CreateProductUseCase createProductUseCase,
-            UpdateProductUseCase updateProductUseCase
+            UpdateProductUseCase updateProductUseCase,
+            DeleteProductUseCase deleteProductUseCase
     ) {
         this.createProductUseCase = createProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
+        this.deleteProductUseCase = deleteProductUseCase;
     }
 
     @PostMapping("/v1/stores/{storeId}/products")
@@ -49,6 +54,22 @@ public class ProductRestController {
     ) {
         updateProductUseCase.command(
                 request.toCommand(
+                        productId,
+                        managerContext.getId(),
+                        storeId
+                )
+        );
+        return ApiResponse.ok();
+    }
+
+    @PostMapping("/v1/stores/{storeId}/products/{productId}/delete")
+    public ApiResponse<Void> deleteProduct(
+            @CurrentManager final ManagerContext managerContext,
+            @PathVariable("storeId") final long storeId,
+            @PathVariable("productId") final long productId
+    ) {
+        deleteProductUseCase.command(
+                new Command(
                         productId,
                         managerContext.getId(),
                         storeId

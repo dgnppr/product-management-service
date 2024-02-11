@@ -24,5 +24,4 @@ public class ProductService {
             throw new PermissionDeniedException("Manager does not have permission");
         }
     }
-
 }
