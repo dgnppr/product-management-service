@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import me.dgpr.common.exception.NotFoundException;
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.domains.category.domain.Category;
 import me.dgpr.domains.category.usecase.CreateCategoryUseCase.Command;
 import me.dgpr.persistence.entity.category.CategoryEntity;
@@ -111,7 +111,10 @@ class CreateCategoryTest {
                 categoryName
         );
 
-        doThrow(new PermissionDeniedException("Manager does not have permission"))
+        doThrow(new PermissionDeniedException(
+                "Store",
+                "Manager does not have permission")
+        )
                 .when(categoryService)
                 .verifyManagerPermission(
                         managerWhoNotStoreOwnerId,

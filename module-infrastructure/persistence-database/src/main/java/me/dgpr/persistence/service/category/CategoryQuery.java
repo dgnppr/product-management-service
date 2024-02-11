@@ -26,7 +26,7 @@ public class CategoryQuery {
     }
 
     public void existsByIds(final Set<Long> ids) {
-        if (categoryRepository.existsByIdIn(ids) != ids.size()) {
+        if (categoryRepository.countByIdIn(ids) != ids.size()) {
             throw new NotFoundException(
                     "카테고리",
                     String.valueOf(ids)

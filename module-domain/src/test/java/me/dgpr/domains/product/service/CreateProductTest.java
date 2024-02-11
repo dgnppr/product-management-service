@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 import me.dgpr.common.exception.NotFoundException;
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.domains.product.domain.Product;
 import me.dgpr.domains.product.usecase.CreateProductUseCase;
 import me.dgpr.domains.product.usecase.CreateProductUseCase.Command;

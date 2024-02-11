@@ -6,7 +6,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.domains.product.usecase.DeleteProductUseCase.Command;
 import me.dgpr.persistence.service.product.ProductCommand;
 import me.dgpr.persistence.service.productcategory.ProductCategoryCommand;

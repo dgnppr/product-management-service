@@ -74,6 +74,14 @@ public record ApiResponse<T>(
         );
     }
 
+    public static ApiResponse<Void> forbidden(final String message) {
+        return of(
+                HttpStatus.FORBIDDEN.value(),
+                message,
+                null
+        );
+    }
+
     public record Meta(
             int code,
             String message

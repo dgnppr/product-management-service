@@ -1,6 +1,8 @@
 package me.dgpr.api;
 
 import jakarta.validation.ConstraintViolationException;
+import me.dgpr.common.exception.NotFoundException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -44,11 +46,29 @@ public class RestControllerAdvice {
     }
 
     /**
+     * 403
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(PermissionDeniedException.class)
+    ApiResponse<Void> handleException(PermissionDeniedException e) {
+        return ApiResponse.forbidden(e.getMessage());
+    }
+
+    /**
      * 404
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     ApiResponse<Void> handleException(NoHandlerFoundException e) {
+        return ApiResponse.notFound(e.getMessage());
+    }
+
+    /**
+     * 404
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    ApiResponse<Void> handleException(NotFoundException e) {
         return ApiResponse.notFound(e.getMessage());
     }
 

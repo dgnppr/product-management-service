@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-import me.dgpr.config.exception.PermissionDeniedException;
+import me.dgpr.common.exception.PermissionDeniedException;
 import me.dgpr.persistence.service.store.StoreQuery;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
