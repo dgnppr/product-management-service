@@ -10,6 +10,7 @@ import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.entity.productcategory.ProductCategoryEntity;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
+import me.dgpr.persistence.service.category.CategoryQuery;
 import me.dgpr.persistence.service.product.ProductCommand;
 import me.dgpr.persistence.service.product.ProductQuery;
 import me.dgpr.persistence.service.productcategory.ProductCategoryCommand;
@@ -30,6 +31,7 @@ public class UpdateProduct implements UpdateProductUseCase {
     private final ProductQuery productQuery;
     private final ProductNameSeparator productNameSeparator;
     private final ProductNameCommand productNameCommand;
+    private final CategoryQuery categoryQuery;
     private final ProductNameQuery productNameQuery;
     private final ProductCategoryQuery productCategoryQuery;
     private final ProductCategoryCommand productCategoryCommand;
@@ -40,6 +42,7 @@ public class UpdateProduct implements UpdateProductUseCase {
             ProductCommand productCommand,
             ProductNameSeparator productNameSeparator,
             ProductNameCommand productNameCommand,
+            CategoryQuery categoryQuery,
             ProductNameQuery productNameQuery,
             ProductCategoryQuery productCategoryQuery,
             ProductCategoryCommand productCategoryCommand
@@ -47,6 +50,7 @@ public class UpdateProduct implements UpdateProductUseCase {
         this.productCommand = productCommand;
         this.productNameSeparator = productNameSeparator;
         this.productNameCommand = productNameCommand;
+        this.categoryQuery = categoryQuery;
         this.productNameQuery = productNameQuery;
         this.productCategoryQuery = productCategoryQuery;
         this.productQuery = productQuery;
@@ -63,10 +67,13 @@ public class UpdateProduct implements UpdateProductUseCase {
 
         ProductEntity productEntity = productQuery.findById(command.productId());
 
+        // 상품 카테고리 업데이트
         updateProductCategories(command);
 
+        // 상품 이름 업데이트
         updateProductNames(command, productEntity);
 
+        // 상품 업데이트
         updateProduct(command);
 
         return Product.from(productEntity);
@@ -90,37 +97,43 @@ public class UpdateProduct implements UpdateProductUseCase {
     }
 
     private void updateProductNames(Command command, ProductEntity productEntity) {
-        if (!productEntity.getName().equals(command.name())) {
-            Set<String> existingNames = productNameQuery.findByProductId(command.productId())
-                    .stream()
-                    .map(ProductNameEntity::getName)
-                    .collect(Collectors.toSet());
-
-            Set<String> newNames = productNameSeparator.separate(command.name());
-
-            Set<String> namesToAdd = new HashSet<>(newNames);
-            namesToAdd.removeAll(existingNames);
-
-            Set<String> namesToRemove = new HashSet<>(existingNames);
-            namesToRemove.removeAll(newNames);
-
-            productNameCommand.createProductNames(
-                    new ProductNameCommand.CreateProductNames(
-                            command.productId(),
-                            namesToAdd
-                    )
-            );
-
-            productNameCommand.deleteProductNamesByProductId(
-                    new ProductNameCommand.DeleteProductNames(
-                            command.productId(),
-                            namesToRemove
-                    )
-            );
+        // 이름이 변경되지 않았으면 리턴
+        if (productEntity.getName().equals(command.name())) {
+            return;
         }
+
+        Set<String> existingNames = productNameQuery.findByProductId(command.productId())
+                .stream()
+                .map(ProductNameEntity::getName)
+                .collect(Collectors.toSet());
+
+        Set<String> newNames = productNameSeparator.separate(command.name());
+
+        Set<String> namesToAdd = new HashSet<>(newNames);
+        namesToAdd.removeAll(existingNames);
+
+        Set<String> namesToRemove = new HashSet<>(existingNames);
+        namesToRemove.removeAll(newNames);
+
+        productNameCommand.createProductNames(
+                new ProductNameCommand.CreateProductNames(
+                        command.productId(),
+                        namesToAdd
+                )
+        );
+
+        productNameCommand.deleteProductNamesByProductId(
+                new ProductNameCommand.DeleteProductNames(
+                        command.productId(),
+                        namesToRemove
+                )
+        );
     }
 
     private void updateProductCategories(Command command) {
+        // 1. 존재하는 카테고리인지 확인
+        categoryQuery.existsByIds(command.categoryIds());
+
         Set<Long> currentCategoryIds = productCategoryQuery.findByProductId(command.productId())
                 .stream()
                 .map(ProductCategoryEntity::getCategoryId)
@@ -128,6 +141,7 @@ public class UpdateProduct implements UpdateProductUseCase {
 
         Set<Long> newCategoryIds = new HashSet<>(command.categoryIds());
 
+        // 2. 카테고리가 업데이트되었으면 업데이트
         if (!currentCategoryIds.equals(newCategoryIds)) {
 
             Set<Long> categoriesToRemove = new HashSet<>(currentCategoryIds);
