@@ -41,23 +41,25 @@ public class ProductQuery {
     }
 
     public ProductWithCategoriesDTO findByIdWithCategories(final long id) {
+
+        // 상품 ID로 조회
         ProductEntity productEntity = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         "상품",
                         String.valueOf(id)
                 ));
 
-        List<ProductCategoryDTO> productCategoryDTOs = productCategoryRepository.findByProductIdIn(
-                Set.of(id));
-
-        Map<Long, Set<String>> productIdToCategoryNames = productCategoryDTOs.stream()
-                .collect(Collectors.groupingBy(
-                        ProductCategoryDTO::productId,
-                        Collectors.mapping(
-                                ProductCategoryDTO::categoryName,
-                                Collectors.toSet()
-                        )
-                ));
+        // 상품과 카테고리 목록을 조인하여 조회
+        Map<Long, Set<String>> productIdToCategoryNames =
+                productCategoryRepository.findByProductIdIn(Set.of(id))
+                        .stream()
+                        .collect(Collectors.groupingBy(
+                                ProductCategoryDTO::productId,
+                                Collectors.mapping(
+                                        ProductCategoryDTO::categoryName,
+                                        Collectors.toSet()
+                                )
+                        ));
 
         return new ProductWithCategoriesDTO(
                 productEntity.getId(),
@@ -77,6 +79,7 @@ public class ProductQuery {
             final long storeId,
             final Pageable pageable
     ) {
+        // 가게에 등록된 상품 조회
         Page<ProductEntity> products = productRepository.findAllByStoreId(
                 storeId,
                 pageable
@@ -87,6 +90,7 @@ public class ProductQuery {
                 .map(ProductEntity::getId)
                 .collect(Collectors.toSet());
 
+        // 상품 ID 목록으로 카테고리 목록 조회
         List<ProductCategoryDTO> productCategoryDTOs = productCategoryRepository.findByProductIdIn(
                 productIds);
 
@@ -118,10 +122,13 @@ public class ProductQuery {
 
     }
 
-    public Page<ProductEntity> findByName(
-            final String name,
-            final Pageable pageable
+    public List<ProductEntity> findByStoreIdAndName(
+            final long storeId,
+            final String name
     ) {
-        return productRepository.findByNameContaining(name, pageable);
+        return productRepository.findByStoreIdAndName(
+                storeId,
+                name
+        );
     }
 }

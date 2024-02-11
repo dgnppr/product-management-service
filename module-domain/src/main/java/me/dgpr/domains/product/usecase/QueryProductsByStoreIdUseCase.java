@@ -4,7 +4,7 @@ import me.dgpr.domains.product.domain.ProductWithCategories;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface QueryProductsUseCase {
+public interface QueryProductsByStoreIdUseCase {
 
     Page<ProductWithCategories> query(Query query);
 
