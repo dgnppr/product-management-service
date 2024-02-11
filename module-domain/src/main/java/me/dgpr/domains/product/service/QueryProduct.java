@@ -2,6 +2,7 @@ package me.dgpr.domains.product.service;
 
 import me.dgpr.domains.product.domain.ProductWithCategories;
 import me.dgpr.domains.product.usecase.QueryProductUseCase;
+import me.dgpr.persistence.repository.product.dto.ProductWithCategoriesDTO;
 import me.dgpr.persistence.service.product.ProductQuery;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,9 @@ public class QueryProduct implements QueryProductUseCase {
 
     @Override
     public ProductWithCategories query(Query query) {
+        ProductWithCategoriesDTO dto = productQuery.findByIdWithCategories(
+                query.productId());
 
-        return null;
+        return ProductWithCategories.from(dto);
     }
 }

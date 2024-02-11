@@ -6,10 +6,7 @@ public interface QueryProductUseCase {
 
     ProductWithCategories query(Query query);
 
-    record Query(
-            long storeId,
-            long productId
-    ) {
+    record Query(long productId) {
 
     }
 
