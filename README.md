@@ -2,6 +2,31 @@
 
 ---
 
+## Table of Contents
+
+- [상품 관리 서비스](#상품-관리-서비스)
+    - [기술 스택](#기술-스택)
+    - [터미널 실행 순서](#터미널-실행-순서)
+    - [기능 및 요구 사항](#기능-및-요구-사항)
+    - [DB 모델링](#db-모델링)
+    - [백엔드 모듈 구성](#백엔드-모듈-구성)
+    - [API 디자인 설계](#api-디자인-설계)
+    - [APIs](#apis)
+        - [회원가입](#1-회원가입)
+        - [로그인](#2-로그인)
+        - [로그아웃](#3-로그아웃)
+        - [가게 등록](#4-가게-등록)
+        - [카테고리 등록](#5-카테고리-등록)
+        - [상품 등록](#6-상품-등록)
+        - [상품 수정](#7-상품-수정)
+        - [상품 삭제](#8-상품-삭제)
+        - [상품 리스트 조회](#9-상품-리스트-조회)
+        - [상품 상세 조회](#10-상품-상세-조회)
+        - [상품 검색](#11-상품-검색)
+    - [고민했던 부분](#고민했던-부분)
+
+---
+
 <br>
 
 ## 기술 스택
@@ -336,7 +361,6 @@ HTTP/1.1 200 OK
 #### 요청
 
 ```http request
-### 상품 업데이트 - 성공
 POST http://localhost:8080/v1/stores/1/products/1/update
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
@@ -377,7 +401,6 @@ HTTP/1.1 200 OK
 #### 요청
 
 ```http request
-### 상품 삭제 - 성공
 POST http://localhost:8080/v1/stores/1/products/1/delete
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
