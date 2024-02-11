@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.domains.product.domain.ProductWithCategories;
-import me.dgpr.domains.product.usecase.QueryProductUseCase.Query;
+import me.dgpr.domains.product.usecase.QueryProductsUseCase.Query;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.dto.ProductWithCategoriesDTO;
@@ -39,7 +39,7 @@ class QueryProductTest {
     @Mock
     private StoreQuery storeQuery;
     @InjectMocks
-    private QueryProduct sut;
+    private QueryProducts sut;
 
     @Test
     void 존재하지_않는_가게_id로_쿼리시_NotFoundException_예외_발생() {
@@ -50,7 +50,7 @@ class QueryProductTest {
         //Act & Assert
         assertThrows(
                 NotFoundException.class,
-                () -> sut.query(mock(QueryProduct.Query.class)
+                () -> sut.query(mock(QueryProducts.Query.class)
                 )
         );
     }
@@ -83,7 +83,7 @@ class QueryProductTest {
         );
         var expected = new PageImpl<>(dtos, pageable, dtos.size());
 
-        when(productQuery.findByStoreId(eq(storeId), eq(pageable)))
+        when(productQuery.findAllByStoreId(eq(storeId), eq(pageable)))
                 .thenReturn(expected);
 
         // Act

@@ -40,7 +40,7 @@ public class ProductQuery {
                 ));
     }
 
-    public Page<ProductWithCategoriesDTO> findByStoreId(
+    public Page<ProductWithCategoriesDTO> findAllByStoreId(
             final long storeId,
             final Pageable pageable
     ) {
@@ -83,16 +83,6 @@ public class ProductQuery {
 
         return new PageImpl<>(dtos, pageable, products.getTotalElements());
 
-    }
-
-    public Page<ProductEntity> findAllByStoreId(
-            final long storeId,
-            final Pageable pageable
-    ) {
-        return productRepository.findAllByStoreId(
-                storeId,
-                pageable
-        );
     }
 
     public Page<ProductEntity> findByName(
