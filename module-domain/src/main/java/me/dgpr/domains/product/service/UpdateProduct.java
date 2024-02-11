@@ -67,6 +67,8 @@ public class UpdateProduct implements UpdateProductUseCase {
 
         ProductEntity productEntity = productQuery.findById(command.productId());
 
+        // TODO 같은 이름을 가진 상품 존재하는지 여부 체크
+
         // 상품 카테고리 업데이트
         updateProductCategories(command);
 

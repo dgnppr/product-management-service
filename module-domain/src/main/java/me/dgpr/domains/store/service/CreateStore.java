@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 public class CreateStore implements CreateStoreUseCase {
 
     private final StoreCommand storeCommand;
-
+    
     public CreateStore(final StoreCommand storeCommand) {
         this.storeCommand = storeCommand;
     }
 
     @Override
     public Store command(final Command command) {
+        // TODO 이미 등록되었는지 확인
+
         StoreCommand.CreateStore createStore = StoreCommand.CreateStore.of(
                 command.managerId(),
                 command.companyRegistrationNumber(),

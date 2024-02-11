@@ -28,6 +28,11 @@ public class CreateCategory implements CreateCategoryUseCase {
                 command.storeId()
         );
 
+        categoryService.verifyCategoryNameIsUnique(
+                command.storeId(),
+                command.name()
+        );
+
         CategoryCommand.CreateCategory createCategory = new CategoryCommand.CreateCategory(
                 command.storeId(),
                 command.name()

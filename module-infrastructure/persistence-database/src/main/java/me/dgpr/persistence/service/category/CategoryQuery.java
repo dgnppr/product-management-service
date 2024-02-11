@@ -33,4 +33,14 @@ public class CategoryQuery {
             );
         }
     }
+
+    public boolean existsByStoreIdAndName(
+            final long storeId,
+            final String name
+    ) {
+        return categoryRepository.existsByStoreIdAndName(
+                storeId,
+                name
+        );
+    }
 }

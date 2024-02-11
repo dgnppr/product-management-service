@@ -10,9 +10,9 @@ import static org.mockito.Mockito.when;
 
 import me.dgpr.api.auth.dto.LoginRequest;
 import me.dgpr.api.auth.dto.LoginResponse;
+import me.dgpr.common.exception.AuthenticationException;
 import me.dgpr.config.security.JwtTokenHandler;
 import me.dgpr.config.security.JwtTokenProperties;
-import me.dgpr.domains.manager.exception.InvalidPasswordException;
 import me.dgpr.domains.manager.usecase.LoginManagerUseCase;
 import me.dgpr.domains.manager.usecase.LogoutManagerUseCase;
 import me.dgpr.fixture.manager.ManagerFixture;
@@ -81,7 +81,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void 잘못된_비밀번호로_로그인할_시_InvalidPasswordException_예외_발생() {
+    void 잘못된_비밀번호로_로그인할_시_AuthenticationException_예외_발생() {
         //Arrange
         var phoneNumber = "01012345678";
         var password = "password";
@@ -89,13 +89,13 @@ class AuthServiceTest {
         var query = new LoginManagerUseCase.Query(phoneNumber, password);
 
         when(loginManagerUseCase.query(eq(query)))
-                .thenThrow(new InvalidPasswordException("managerId"));
+                .thenThrow(new AuthenticationException());
 
         var request = new LoginRequest(phoneNumber, password);
 
         //Act & Assert
         assertThrows(
-                InvalidPasswordException.class,
+                AuthenticationException.class,
                 () -> sut.login(request)
         );
     }

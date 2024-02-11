@@ -1,7 +1,7 @@
 package me.dgpr.domains.manager.service;
 
+import me.dgpr.common.exception.AuthenticationException;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.exception.InvalidPasswordException;
 import me.dgpr.domains.manager.usecase.LoginManagerUseCase;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.service.manager.ManagerQuery;
@@ -26,7 +26,7 @@ public class LoginManager implements LoginManagerUseCase {
         ManagerEntity managerEntity = managerQuery.findByPhoneNumber(query.phoneNumber());
 
         if (!passwordEncoder.matches(query.password(), managerEntity.getPassword())) {
-            throw new InvalidPasswordException(String.valueOf(managerEntity.getId()));
+            throw new AuthenticationException();
         }
 
         return new Manager(

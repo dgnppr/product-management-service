@@ -1,14 +1,14 @@
 package me.dgpr.common.exception;
 
-public class NotFoundException extends RuntimeException {
+public class DuplicatedException extends RuntimeException {
 
-    private static final String LOG_FORMAT = "could not find %s [param=%s]";
-    private static final String MESSAGE_FORMAT = "존재하지 않는 %s입니다.";
+    private static final String LOG_FORMAT = "Duplicated: %s [param=%s]";
+    private static final String MESSAGE_FORMAT = "중복된 %s입니다.";
     private final String target;
     private final String param;
 
 
-    public NotFoundException(
+    public DuplicatedException(
             final String target,
             final String param) {
         super(String.format(MESSAGE_FORMAT, target));
@@ -27,4 +27,5 @@ public class NotFoundException extends RuntimeException {
     public String getLogMessage() {
         return String.format(LOG_FORMAT, target, param);
     }
+
 }

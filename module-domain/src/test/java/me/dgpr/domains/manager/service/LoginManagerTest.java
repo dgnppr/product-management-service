@@ -6,8 +6,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import me.dgpr.common.exception.AuthenticationException;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.exception.InvalidPasswordException;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.service.manager.ManagerQuery;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -91,7 +91,7 @@ class LoginManagerTest {
 
         //Act & Assert
         assertThrows(
-                InvalidPasswordException.class,
+                AuthenticationException.class,
                 () -> sut.query(query)
         );
     }

@@ -94,7 +94,7 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
 ### 상품 상세 내역 조회 - 성공
-GET http://localhost:8080/v1/stores/1/products/2
+GET http://localhost:8080/v1/stores/1/products/1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
