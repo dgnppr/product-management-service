@@ -81,34 +81,6 @@ class ProductQueryTest {
     }
 
     @Test
-    void 가게_id를_사용하여_ProductEntity_페이지로_응답한다() {
-        //Arrange
-        var totalElements = 100;
-        var pageNumber = 0;
-        var pageSize = 10;
-
-        var storeId = 1L;
-        var products = createProducts(totalElements);
-        var pageable = PageRequest.of(pageNumber, pageSize);
-        var expected = new PageImpl<>(products, pageable, products.size());
-
-        when(productRepository.findAllByStoreId(storeId, pageable))
-                .thenReturn(expected);
-
-        //Act
-        Page<ProductEntity> actual = sut.findAllByStoreId(
-                storeId,
-                pageable
-        );
-
-        //Assert
-        assertThat(actual.getTotalElements()).isEqualTo(expected.getTotalElements());
-        assertThat(actual.getContent()).isEqualTo(expected.getContent());
-        assertThat(actual.getNumber()).isEqualTo(pageNumber);
-        assertThat(actual.getSize()).isEqualTo(pageSize);
-    }
-
-    @Test
     void 상품_이름으로_ProducEntity_페이지를_응답한다() {
         // Arrange
         var totalElements = 5;

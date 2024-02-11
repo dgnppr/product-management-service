@@ -8,11 +8,12 @@ import me.dgpr.api.product.dto.UpdateProductRequest;
 import me.dgpr.config.security.CurrentManager;
 import me.dgpr.config.security.ManagerContext;
 import me.dgpr.domains.product.domain.ProductWithCategories;
+import me.dgpr.domains.product.service.QueryProducts;
 import me.dgpr.domains.product.usecase.CreateProductUseCase;
 import me.dgpr.domains.product.usecase.DeleteProductUseCase;
 import me.dgpr.domains.product.usecase.DeleteProductUseCase.Command;
 import me.dgpr.domains.product.usecase.QueryProductUseCase;
-import me.dgpr.domains.product.usecase.QueryProductUseCase.Query;
+import me.dgpr.domains.product.usecase.QueryProductsUseCase;
 import me.dgpr.domains.product.usecase.UpdateProductUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,17 +31,20 @@ public class ProductRestController {
     private final CreateProductUseCase createProductUseCase;
     private final UpdateProductUseCase updateProductUseCase;
     private final DeleteProductUseCase deleteProductUseCase;
+    private final QueryProductsUseCase queryProductsUseCase;
     private final QueryProductUseCase queryProductUseCase;
 
     public ProductRestController(
             CreateProductUseCase createProductUseCase,
             UpdateProductUseCase updateProductUseCase,
             DeleteProductUseCase deleteProductUseCase,
+            QueryProductsUseCase queryProductsUseCase,
             QueryProductUseCase queryProductUseCase
     ) {
         this.createProductUseCase = createProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
+        this.queryProductsUseCase = queryProductsUseCase;
         this.queryProductUseCase = queryProductUseCase;
     }
 
@@ -49,10 +53,23 @@ public class ProductRestController {
             @PathVariable("storeId") final long storeId,
             @PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable
     ) {
-        Page<ProductWithCategories> data = queryProductUseCase.query(
-                new Query(
+        Page<ProductWithCategories> data = queryProductsUseCase.query(
+                new QueryProducts.Query(
                         storeId,
                         pageable
+                )
+        );
+        return ApiResponse.ok(data);
+    }
+
+    @GetMapping("/v1/stores/{storeId}/products/{productId}")
+    public ApiResponse<ProductWithCategories> getProduct(
+            @PathVariable("storeId") final long storeId,
+            @PathVariable("productId") final long productId
+    ) {
+        ProductWithCategories data = queryProductUseCase.query(
+                new QueryProductUseCase.Query(
+                        productId
                 )
         );
         return ApiResponse.ok(data);

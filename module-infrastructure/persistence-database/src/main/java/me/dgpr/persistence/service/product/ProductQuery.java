@@ -40,7 +40,40 @@ public class ProductQuery {
                 ));
     }
 
-    public Page<ProductWithCategoriesDTO> findByStoreId(
+    public ProductWithCategoriesDTO findByIdWithCategories(final long id) {
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        "상품",
+                        String.valueOf(id)
+                ));
+
+        List<ProductCategoryDTO> productCategoryDTOs = productCategoryRepository.findByProductIdIn(
+                Set.of(id));
+
+        Map<Long, Set<String>> productIdToCategoryNames = productCategoryDTOs.stream()
+                .collect(Collectors.groupingBy(
+                        ProductCategoryDTO::productId,
+                        Collectors.mapping(
+                                ProductCategoryDTO::categoryName,
+                                Collectors.toSet()
+                        )
+                ));
+
+        return new ProductWithCategoriesDTO(
+                productEntity.getId(),
+                productEntity.getStoreId(),
+                productEntity.getPrice(),
+                productEntity.getCost(),
+                productEntity.getName(),
+                productEntity.getDescription(),
+                productEntity.getBarcode(),
+                productEntity.getExpirationDate(),
+                productEntity.getSize(),
+                productIdToCategoryNames.getOrDefault(productEntity.getId(), new HashSet<>())
+        );
+    }
+
+    public Page<ProductWithCategoriesDTO> findAllByStoreId(
             final long storeId,
             final Pageable pageable
     ) {
@@ -83,16 +116,6 @@ public class ProductQuery {
 
         return new PageImpl<>(dtos, pageable, products.getTotalElements());
 
-    }
-
-    public Page<ProductEntity> findAllByStoreId(
-            final long storeId,
-            final Pageable pageable
-    ) {
-        return productRepository.findAllByStoreId(
-                storeId,
-                pageable
-        );
     }
 
     public Page<ProductEntity> findByName(
