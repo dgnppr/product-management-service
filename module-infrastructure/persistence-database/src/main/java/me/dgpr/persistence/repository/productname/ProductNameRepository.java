@@ -1,5 +1,7 @@
 package me.dgpr.persistence.repository.productname;
 
+import java.util.List;
+import java.util.Set;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import org.springframework.data.domain.Page;
@@ -29,4 +31,16 @@ public interface ProductNameRepository extends JpaRepository<ProductNameEntity, 
             "SET pne.deletedAt = NOW() " +
             "WHERE pne.productId = :productId")
     void deleteAllByProductId(@Param("productId") long productId);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE ProductNameEntity pne " +
+            "SET pne.deletedAt = NOW() " +
+            "WHERE pne.productId = :productId AND pne.name IN :names")
+    void deleteByProductIdAndNames(
+            @Param("productId") long productId,
+            @Param("names") Set<String> names
+    );
+
+    List<ProductNameEntity> findByProductId(long productId);
 }

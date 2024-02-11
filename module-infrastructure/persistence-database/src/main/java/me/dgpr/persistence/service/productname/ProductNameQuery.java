@@ -1,6 +1,8 @@
 package me.dgpr.persistence.service.productname;
 
+import java.util.List;
 import me.dgpr.persistence.entity.product.ProductEntity;
+import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.repository.productname.ProductNameRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,5 +29,9 @@ public class ProductNameQuery {
                 name,
                 pageable
         );
+    }
+
+    public List<ProductNameEntity> findByProductId(final long productId) {
+        return productNameRepository.findByProductId(productId);
     }
 }

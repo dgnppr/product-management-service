@@ -33,3 +33,39 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
     1
   ]
 }
+
+### 상품 업데이트 - 성공
+POST http://localhost:8080/v1/stores/1/products/1/update
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+  "price": 20000,
+  "cost": 10000,
+  "name": "name3 name4",
+  "description": "description",
+  "barcode": "1234567890",
+  "expirationDate": "2024-12-31T00:00:00",
+  "size": "LARGE",
+  "categoryIds": [
+    2
+  ]
+}
+
+
+### 상품 업데이트 - 실패 (BAD_REQUEST)
+POST http://localhost:8080/v1/stores/1/products/1/update
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1NjY0MjYsImV4cCI6MTcwNzY1MjgyNn0.6iNahpID63GHGNuZseugq6SkV0En8Wbbu0ZDopT9C-g
+
+{
+  "price": 10000,
+  "cost": 5000,
+  "name": "name1 name2",
+  "description": "description",
+  "barcode": "1234567890",
+  "expirationDate": "2024-12-31T00:00:00",
+  "size": "SMALL",
+  "categoryIds": [
+  ]
+}

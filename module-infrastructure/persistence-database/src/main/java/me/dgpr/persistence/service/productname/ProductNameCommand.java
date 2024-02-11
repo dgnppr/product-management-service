@@ -43,6 +43,13 @@ public class ProductNameCommand {
         return productNameRepository.saveAll(productNames).size();
     }
 
+    public void deleteProductNamesByProductId(final DeleteProductNames command) {
+        productNameRepository.deleteByProductIdAndNames(
+                command.productId(),
+                command.names()
+        );
+    }
+
     public void deleteAllByProductId(final long productId) {
         productNameRepository.deleteAllByProductId(productId);
     }
@@ -50,6 +57,14 @@ public class ProductNameCommand {
     public record CreateProductNames(
             long productId,
             Set<String> names) {
+
+    }
+
+    public record DeleteProductNames(
+            long productId,
+            Set<String> names
+
+    ) {
 
     }
 }
