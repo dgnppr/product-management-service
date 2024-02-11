@@ -6,7 +6,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 {
   "price": 10000,
   "cost": 5000,
-  "name": "name1 name2",
+  "name": "name1 name2 name3",
   "description": "description",
   "barcode": "1234567890",
   "expirationDate": "2024-12-31T00:00:00",
@@ -97,5 +97,10 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 
 ### 상품 상세 내역 조회 - 성공
 GET http://localhost:8080/v1/stores/1/products/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
+
+### 상품 이름 조회 - 성공
+GET http://localhost:8080/v1/stores/1/products/search?name=name1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY

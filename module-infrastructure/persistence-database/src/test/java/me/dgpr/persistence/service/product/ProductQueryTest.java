@@ -6,10 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
@@ -22,9 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -78,49 +72,5 @@ class ProductQueryTest {
                 NotFoundException.class,
                 () -> sut.findById(notExistingProductId)
         );
-    }
-
-    @Test
-    void 상품_이름으로_ProducEntity_페이지를_응답한다() {
-        // Arrange
-        var totalElements = 5;
-        var pageNumber = 0;
-        var pageSize = 2;
-
-        var searchName = "Test Product";
-
-        var products = createProducts(totalElements);
-        var pageable = PageRequest.of(pageNumber, pageSize);
-        var expected = new PageImpl<>(products, pageable, totalElements);
-
-        when(productRepository.findByNameContaining(searchName, pageable))
-                .thenReturn(expected);
-
-        // Act
-        Page<ProductEntity> actual = sut.findByName(searchName, pageable);
-
-        // Assert
-        assertThat(actual.getTotalElements()).isEqualTo(expected.getTotalElements());
-        assertThat(actual.getContent().size()).isEqualTo(expected.getContent().size());
-        assertThat(actual.getNumber()).isEqualTo(pageNumber);
-        assertThat(actual.getSize()).isEqualTo(pageSize);
-    }
-
-    private List<ProductEntity> createProducts(int size) {
-        List<ProductEntity> products = new ArrayList<>();
-        IntStream.range(0, size).forEach(i -> {
-            ProductEntity product = ProductEntity.create(
-                    1L,
-                    Money.of(BigDecimal.valueOf(100)),
-                    Money.of(BigDecimal.valueOf(50)),
-                    "Test Product " + i,
-                    "This is a test product",
-                    "123456789",
-                    LocalDateTime.now().plusDays(30),
-                    ProductSize.SMALL);
-            products.add(product);
-        });
-
-        return products;
     }
 }

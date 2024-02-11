@@ -2,17 +2,20 @@ package me.dgpr.api.product;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
+import java.util.List;
 import me.dgpr.api.ApiResponse;
 import me.dgpr.api.product.dto.CreateProductRequest;
 import me.dgpr.api.product.dto.UpdateProductRequest;
 import me.dgpr.config.security.CurrentManager;
 import me.dgpr.config.security.ManagerContext;
+import me.dgpr.domains.product.domain.Product;
 import me.dgpr.domains.product.domain.ProductWithCategories;
 import me.dgpr.domains.product.service.QueryProductsByStoreId;
 import me.dgpr.domains.product.usecase.CreateProductUseCase;
 import me.dgpr.domains.product.usecase.DeleteProductUseCase;
 import me.dgpr.domains.product.usecase.DeleteProductUseCase.Command;
 import me.dgpr.domains.product.usecase.QueryProductByIdUseCase;
+import me.dgpr.domains.product.usecase.QueryProductsByNameUseCase;
 import me.dgpr.domains.product.usecase.QueryProductsByStoreIdUseCase;
 import me.dgpr.domains.product.usecase.UpdateProductUseCase;
 import org.springframework.data.domain.Page;
@@ -34,19 +37,22 @@ public class ProductRestController {
     private final DeleteProductUseCase deleteProductUseCase;
     private final QueryProductsByStoreIdUseCase queryProductsByStoreIdUseCase;
     private final QueryProductByIdUseCase queryProductByIdUseCase;
+    private final QueryProductsByNameUseCase queryProductsByNameUseCase;
 
     public ProductRestController(
             CreateProductUseCase createProductUseCase,
             UpdateProductUseCase updateProductUseCase,
             DeleteProductUseCase deleteProductUseCase,
             QueryProductsByStoreIdUseCase queryProductsByStoreIdUseCase,
-            QueryProductByIdUseCase queryProductByIdUseCase
+            QueryProductByIdUseCase queryProductByIdUseCase,
+            QueryProductsByNameUseCase queryProductsByNameUseCase
     ) {
         this.createProductUseCase = createProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
         this.queryProductsByStoreIdUseCase = queryProductsByStoreIdUseCase;
         this.queryProductByIdUseCase = queryProductByIdUseCase;
+        this.queryProductsByNameUseCase = queryProductsByNameUseCase;
     }
 
     @GetMapping("/v1/stores/{storeId}/products")
@@ -77,12 +83,17 @@ public class ProductRestController {
     }
 
     @GetMapping("/v1/stores/{storeId}/products/search")
-    public ApiResponse<Page> getProductsByName(
+    public ApiResponse<List<Product>> getProductsByName(
             @PathVariable("storeId") final long storeId,
             @RequestParam("name") final String name
     ) {
-
-        return ApiResponse.ok();
+        List<Product> data = queryProductsByNameUseCase.query(
+                new QueryProductsByNameUseCase.Query(
+                        storeId,
+                        name
+                )
+        );
+        return ApiResponse.ok(data);
     }
 
     @PostMapping("/v1/stores/{storeId}/products")
