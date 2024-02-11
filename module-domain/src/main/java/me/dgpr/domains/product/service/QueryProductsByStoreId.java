@@ -3,7 +3,7 @@ package me.dgpr.domains.product.service;
 import java.util.List;
 import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.domains.product.domain.ProductWithCategories;
-import me.dgpr.domains.product.usecase.QueryProductsUseCase;
+import me.dgpr.domains.product.usecase.QueryProductsByStoreIdUseCase;
 import me.dgpr.persistence.repository.product.dto.ProductWithCategoriesDTO;
 import me.dgpr.persistence.service.product.ProductQuery;
 import me.dgpr.persistence.service.store.StoreQuery;
@@ -12,12 +12,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QueryProducts implements QueryProductsUseCase {
+public class QueryProductsByStoreId implements QueryProductsByStoreIdUseCase {
 
     private final ProductQuery productQuery;
     private final StoreQuery storeQuery;
 
-    public QueryProducts(
+    public QueryProductsByStoreId(
             ProductQuery productQuery,
             StoreQuery storeQuery
     ) {

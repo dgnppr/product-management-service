@@ -2,7 +2,7 @@ package me.dgpr.domains.product.usecase;
 
 import me.dgpr.domains.product.domain.ProductWithCategories;
 
-public interface QueryProductUseCase {
+public interface QueryProductByIdUseCase {
 
     ProductWithCategories query(Query query);
 

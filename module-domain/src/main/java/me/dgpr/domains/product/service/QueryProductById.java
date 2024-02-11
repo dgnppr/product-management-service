@@ -1,17 +1,17 @@
 package me.dgpr.domains.product.service;
 
 import me.dgpr.domains.product.domain.ProductWithCategories;
-import me.dgpr.domains.product.usecase.QueryProductUseCase;
+import me.dgpr.domains.product.usecase.QueryProductByIdUseCase;
 import me.dgpr.persistence.repository.product.dto.ProductWithCategoriesDTO;
 import me.dgpr.persistence.service.product.ProductQuery;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QueryProduct implements QueryProductUseCase {
+public class QueryProductById implements QueryProductByIdUseCase {
 
     private final ProductQuery productQuery;
 
-    public QueryProduct(ProductQuery productQuery) {
+    public QueryProductById(ProductQuery productQuery) {
         this.productQuery = productQuery;
     }
 
