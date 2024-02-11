@@ -1,7 +1,7 @@
 ### 상품 등록 - 성공
 POST http://localhost:8080/v1/stores/1/products
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
 {
   "price": 10000,
@@ -12,7 +12,8 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
   "expirationDate": "2024-12-31T00:00:00",
   "size": "SMALL",
   "categoryIds": [
-    1
+    1,
+    2
   ]
 }
 
@@ -37,7 +38,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 ### 상품 업데이트 - 성공
 POST http://localhost:8080/v1/stores/1/products/1/update
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
 
 {
   "price": 20000,
@@ -86,3 +87,9 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 
 {
 }
+
+
+### 상품 리스트 조회 - 성공
+GET http://localhost:8080/v1/stores/1/products
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY

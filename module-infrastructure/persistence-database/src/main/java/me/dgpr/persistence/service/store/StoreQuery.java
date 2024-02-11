@@ -34,4 +34,8 @@ public class StoreQuery {
                 managerId
         );
     }
+
+    public boolean existsById(final long storeId) {
+        return storeRepository.existsById(storeId);
+    }
 }
