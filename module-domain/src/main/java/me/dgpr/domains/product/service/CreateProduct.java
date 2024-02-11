@@ -44,6 +44,8 @@ public class CreateProduct implements CreateProductUseCase {
                 command.storeId()
         );
 
+        // TODO 같은 이름을 가진 상품 존재하는지 여부 체크
+
         // 2. product 저장
         ProductCommand.CreateProduct createProduct = createProductCommand(command);
         ProductEntity newProduct = productCommand.createNewProduct(createProduct);

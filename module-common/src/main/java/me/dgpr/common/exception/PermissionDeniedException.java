@@ -15,7 +15,7 @@ public class PermissionDeniedException extends RuntimeException {
         this.param = param;
     }
 
-    public String getLogFormat() {
+    public String getLogMessage() {
         return String.format(LOG_FORMAT, target, param);
     }
 }

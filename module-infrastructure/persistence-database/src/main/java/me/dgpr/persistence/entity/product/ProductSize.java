@@ -1,5 +1,7 @@
 package me.dgpr.persistence.entity.product;
 
+import me.dgpr.common.exception.NotFoundException;
+
 public enum ProductSize {
     SMALL("SMALL"),
     LARGE("LARGE");
@@ -20,6 +22,9 @@ public enum ProductSize {
                 return ps;
             }
         }
-        return null;
+        throw new NotFoundException(
+                "상품 사이즈",
+                size
+        );
     }
 }

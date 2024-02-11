@@ -132,9 +132,6 @@ class CreateProductTest {
     @Test
     void 존재하지_않는_가게_id로_Product_생성_시_NotFoundException_예외_발생() {
         //Arrange
-        when(productCommand.createNewProduct(any()))
-                .thenThrow(NotFoundException.class);
-
         Command command = mock(Command.class);
 
         //Act & Assert
@@ -147,12 +144,6 @@ class CreateProductTest {
     @Test
     void 존재하지_않는_카테고리_id로_Product_생성_시_NotFoundException_예외_발생() {
         //Arrange
-        when(productCommand.createNewProduct(any()))
-                .thenReturn(mock(ProductEntity.class));
-
-        when(productCategoryCommand.createProductCategory(any()))
-                .thenThrow(NotFoundException.class);
-
         Command command = mock(Command.class);
 
         //Act & Assert

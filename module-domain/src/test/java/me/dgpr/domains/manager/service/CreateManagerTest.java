@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import me.dgpr.common.exception.DuplicatedException;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.exception.DuplicatedManagerException;
 import me.dgpr.domains.manager.usecase.CreateManagerUseCase.Command;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.service.manager.ManagerCommand;
@@ -72,7 +72,7 @@ class CreateManagerTest {
     }
 
     @Test
-    void 이미_저장된_휴대폰_번호로_Manager를_생성하려고_하면_DuplicatedManagerException_예외_발생() {
+    void 이미_저장된_휴대폰_번호로_Manager를_생성하려고_하면_DuplicatedException_예외_발생() {
         //Arrange
 
         var phoneNumber = "01011112222";
@@ -83,7 +83,7 @@ class CreateManagerTest {
 
         //Act //Assert
         assertThrows(
-                DuplicatedManagerException.class,
+                DuplicatedException.class,
                 () -> sut.command(new Command(phoneNumber, password))
         );
     }

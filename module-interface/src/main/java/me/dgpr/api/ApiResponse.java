@@ -82,6 +82,14 @@ public record ApiResponse<T>(
         );
     }
 
+    public static ApiResponse<Void> unauthorized(final String message) {
+        return of(
+                HttpStatus.UNAUTHORIZED.value(),
+                message,
+                null
+        );
+    }
+
     public record Meta(
             int code,
             String message

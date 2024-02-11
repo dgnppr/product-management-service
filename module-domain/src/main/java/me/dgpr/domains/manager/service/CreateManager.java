@@ -1,7 +1,7 @@
 package me.dgpr.domains.manager.service;
 
+import me.dgpr.common.exception.DuplicatedException;
 import me.dgpr.domains.manager.domain.Manager;
-import me.dgpr.domains.manager.exception.DuplicatedManagerException;
 import me.dgpr.domains.manager.usecase.CreateManagerUseCase;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.service.manager.ManagerCommand;
@@ -29,7 +29,10 @@ public class CreateManager implements CreateManagerUseCase {
     @Override
     public Manager command(final Command command) {
         if (managerQuery.existsByPhoneNumber(command.phoneNumber())) {
-            throw new DuplicatedManagerException(command.phoneNumber());
+            throw new DuplicatedException(
+                    "manager",
+                    command.phoneNumber()
+            );
         }
 
         String encodedPassword = passwordEncoder.encode(command.password());
