@@ -171,6 +171,7 @@ Content-Type: application/json
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -191,7 +192,6 @@ Content-Type: application/json
 #### 요청
 
 ```http request
-### 사장님 로그아웃 - 성공
 POST http://localhost:8080/v1/logout
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDI4ODAsImV4cCI6MTcwODUwNjg4MH0.JpgMmIFNmwONWTiDbHobSQRqdl-ZI--tWfAP4C4Fz8A
@@ -204,6 +204,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -236,6 +237,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 201,
@@ -271,6 +273,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 201,
@@ -314,6 +317,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 201,
@@ -354,6 +358,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -383,7 +388,8 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 
 #### 응답
 
-```http
+```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -410,6 +416,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -484,6 +491,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
@@ -529,6 +537,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 #### 응답
 
 ```http response
+HTTP/1.1 200 OK
 {
   "meta": {
     "code": 200,
