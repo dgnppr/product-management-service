@@ -6,11 +6,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.category.CategoryEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
 import me.dgpr.persistence.service.category.CategoryCommand.CreateCategory;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class CategoryCommandTest {
     private CategoryCommand sut;
 
     @Test
-    void 존재하지_않는_가게_id로_Cateogry_엔티티_생성_시_NotFoundCategoryException_예외_발생한다() {
+    void 존재하지_않는_가게_id로_Cateogry_엔티티_생성_시_NotFoundException_예외_발생한다() {
         //Arrange
         var notExistingStoreId = -1L;
 
@@ -47,7 +47,7 @@ class CategoryCommandTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundStoreException.class,
+                NotFoundException.class,
                 () -> sut.createNewCategory(command)
         );
     }

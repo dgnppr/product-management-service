@@ -6,9 +6,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.manager.ManagerEntity;
 import me.dgpr.persistence.repository.manager.ManagerRepository;
-import me.dgpr.persistence.service.manager.exception.NotFoundManagerException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class ManagerQueryTest {
     }
 
     @Test
-    void id를_이용해_엔티티_조회_실패_시_NotFoundManagerException_예외_발생한다() {
+    void id를_이용해_엔티티_조회_실패_시_NotFoundException_예외_발생한다() {
         //Arrange
         var notExistingManagerId = -1L;
         when(managerRepository.findById(notExistingManagerId))
@@ -73,13 +73,13 @@ class ManagerQueryTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundManagerException.class,
+                NotFoundException.class,
                 () -> sut.findById(notExistingManagerId)
         );
     }
 
     @Test
-    void 휴대폰_번호를_이용해_엔티티_조회_실패_시_NotFoundManagerException_예외_발생한다() {
+    void 휴대폰_번호를_이용해_엔티티_조회_실패_시_NotFoundException_예외_발생한다() {
         //Arrange
         var notExistingPhoneNumber = "01011112222";
         when(managerRepository.findByPhoneNumber(notExistingPhoneNumber))
@@ -87,7 +87,7 @@ class ManagerQueryTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundManagerException.class,
+                NotFoundException.class,
                 () -> sut.findByPhoneNumber(notExistingPhoneNumber)
         );
     }

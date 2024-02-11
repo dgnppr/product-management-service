@@ -1,8 +1,8 @@
 package me.dgpr.persistence.service.product;
 
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,10 @@ public class ProductQuery {
 
     public ProductEntity findById(final long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundProductException(String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException(
+                        "상품",
+                        String.valueOf(id)
+                ));
     }
 
     public Page<ProductEntity> findAllByStoreId(

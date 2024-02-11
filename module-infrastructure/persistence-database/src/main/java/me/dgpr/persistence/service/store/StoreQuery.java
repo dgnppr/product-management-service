@@ -1,8 +1,8 @@
 package me.dgpr.persistence.service.store;
 
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.store.StoreRepository;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,11 @@ public class StoreQuery {
 
     public StoreEntity findById(final long storeId) {
         return storeRepository.findById(storeId)
-                .orElseThrow(() -> new NotFoundStoreException(String.valueOf(storeId)));
+                .orElseThrow(() -> new NotFoundException(
+                                "가게",
+                                String.valueOf(storeId)
+                        )
+                );
     }
 
     public boolean existsByIdAndManagerId(

@@ -9,10 +9,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Set;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.productname.ProductNameEntity;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.productname.ProductNameRepository;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import me.dgpr.persistence.service.productname.ProductNameCommand.CreateProductNames;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -48,7 +48,7 @@ class ProductNameCommandTest {
                 .thenReturn(notExistingProductId);
 
         //Act //Assert
-        assertThrows(NotFoundProductException.class,
+        assertThrows(NotFoundException.class,
                 () -> sut.createProductNames(command)
         );
     }

@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.ProductRepository;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -67,7 +67,7 @@ class ProductQueryTest {
     }
 
     @Test
-    void id를_이용해_엔티티_조회_실패_시_NotFoundProductException_예외가_발생한다() {
+    void id를_이용해_엔티티_조회_실패_시_NotFoundException_예외가_발생한다() {
         //Arrange
         var notExistingProductId = 1L;
         when(productRepository.findById(notExistingProductId))
@@ -75,7 +75,7 @@ class ProductQueryTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundProductException.class,
+                NotFoundException.class,
                 () -> sut.findById(notExistingProductId)
         );
     }

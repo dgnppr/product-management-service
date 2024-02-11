@@ -6,10 +6,10 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.manager.ManagerRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
-import me.dgpr.persistence.service.manager.exception.NotFoundManagerException;
 import me.dgpr.persistence.service.store.StoreCommand.CreateStore;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -61,7 +61,7 @@ class StoreCommandTest {
     }
 
     @Test
-    void 존재하지_않는_사장님_id로_엔티티를_생성할_시_NotFoundManagerException_예외_발생() {
+    void 존재하지_않는_사장님_id로_엔티티를_생성할_시_NotFoundException_예외_발생() {
         //Arrange
         var notExistingManagerId = -1L;
 
@@ -76,7 +76,7 @@ class StoreCommandTest {
 
         //Act * Assert
         assertThrows(
-                NotFoundManagerException.class,
+                NotFoundException.class,
                 () -> sut.createNewStore(command)
         );
     }

@@ -1,13 +1,12 @@
 package me.dgpr.persistence.service.product;
 
 import java.time.LocalDateTime;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.store.StoreRepository;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,7 @@ public class ProductCommand {
     public ProductEntity createNewProduct(final CreateProduct command) {
         // 1. StoreId로 StoreEntity 조회
         if (!storeRepository.existsById(command.storeId())) {
-            throw new NotFoundStoreException(String.valueOf(command.storeId()));
+            throw new NotFoundException("가게", String.valueOf(command.storeId()));
         }
 
         // 2. ProductEntity 생성
@@ -51,7 +50,10 @@ public class ProductCommand {
             final UpdateProduct command
     ) {
         ProductEntity productEntity = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundProductException(String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException(
+                        "상품",
+                        String.valueOf(id))
+                );
 
         productEntity.update(
                 command.price(),

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.config.exception.PermissionDeniedException;
 import me.dgpr.domains.product.domain.Product;
 import me.dgpr.domains.product.usecase.UpdateProductUseCase;
@@ -19,7 +20,6 @@ import me.dgpr.persistence.common.Money;
 import me.dgpr.persistence.entity.product.ProductEntity;
 import me.dgpr.persistence.entity.product.ProductSize;
 import me.dgpr.persistence.service.category.CategoryQuery;
-import me.dgpr.persistence.service.category.exception.NotFoundCategoryException;
 import me.dgpr.persistence.service.product.ProductCommand;
 import me.dgpr.persistence.service.product.ProductQuery;
 import me.dgpr.persistence.service.productcategory.ProductCategoryCommand;
@@ -87,13 +87,13 @@ class UpdateProductTest {
         when(command.categoryIds())
                 .thenReturn(notExistingCategoryIds);
 
-        doThrow(NotFoundCategoryException.class)
+        doThrow(NotFoundException.class)
                 .when(categoryQuery)
                 .existsByIds(eq(notExistingCategoryIds));
 
         //Act & Assert
         assertThrows(
-                NotFoundCategoryException.class,
+                NotFoundException.class,
                 () -> sut.command(command)
         );
     }

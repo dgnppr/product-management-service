@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(":module-common"))
     implementation(project(":module-infrastructure:persistence-database"))
     implementation(project(":module-infrastructure:persistence-redis-adapter"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")

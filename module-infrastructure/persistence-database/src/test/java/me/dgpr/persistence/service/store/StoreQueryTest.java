@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.store.StoreEntity;
 import me.dgpr.persistence.repository.store.StoreRepository;
-import me.dgpr.persistence.service.store.exception.NotFoundStoreException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class StoreQueryTest {
     }
 
     @Test
-    void id를_이용해_엔티티_조회_실패_시_NotFoundStoreException_예외가_발생한다() {
+    void id를_이용해_엔티티_조회_실패_시_NotFoundException_예외가_발생한다() {
         //Arrange
         long notExistingStoreId = 1L;
 
@@ -63,7 +63,7 @@ class StoreQueryTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundStoreException.class,
+                NotFoundException.class,
                 () -> sut.findById(notExistingStoreId)
         );
     }

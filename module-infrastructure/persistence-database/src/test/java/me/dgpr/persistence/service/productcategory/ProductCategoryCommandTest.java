@@ -8,12 +8,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Set;
+import me.dgpr.common.exception.NotFoundException;
 import me.dgpr.persistence.entity.productcategory.ProductCategoryEntity;
 import me.dgpr.persistence.repository.category.CategoryRepository;
 import me.dgpr.persistence.repository.product.ProductRepository;
 import me.dgpr.persistence.repository.productcategory.ProductCategoryRepository;
-import me.dgpr.persistence.service.category.exception.NotFoundCategoryException;
-import me.dgpr.persistence.service.product.exception.NotFoundProductException;
 import me.dgpr.persistence.service.productcategory.ProductCategoryCommand.CreateProductCategory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -74,7 +73,7 @@ class ProductCategoryCommandTest {
     }
 
     @Test
-    void 존재하지_않는_상품_id로_ProductCategory_엔티티를_생성할_시_NotFoundProductException_예외_발생() {
+    void 존재하지_않는_상품_id로_ProductCategory_엔티티를_생성할_시_NotFoundException_예외_발생() {
         //Arrange
         var notExistingProductId = -1L;
         when(productRepository.existsById(eq(notExistingProductId)))
@@ -87,13 +86,13 @@ class ProductCategoryCommandTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundProductException.class,
+                NotFoundException.class,
                 () -> sut.createProductCategory(command)
         );
     }
 
     @Test
-    void 존재하지_않는_카테고리_id_set로_ProductCategory_엔티티를_생성할_시_NotFoundCategoryException_예외_발생() {
+    void 존재하지_않는_카테고리_id_set로_ProductCategory_엔티티를_생성할_시_NotFoundException_예외_발생() {
         //Arrange
         when(productRepository.existsById(any()))
                 .thenReturn(true);
@@ -110,7 +109,7 @@ class ProductCategoryCommandTest {
 
         //Act //Assert
         assertThrows(
-                NotFoundCategoryException.class,
+                NotFoundException.class,
                 () -> sut.createProductCategory(command)
         );
     }
