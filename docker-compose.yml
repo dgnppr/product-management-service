@@ -3,7 +3,9 @@ services:
   mysql:
     image: mysql:5.7
     platform: linux/x86_64
-    container_name: local-mysql
+    container_name: mysql
+    volumes:
+      - ./ddl/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
     ports:
       - "3306:3306"
     environment:
@@ -18,7 +20,16 @@ services:
 
   redis:
     image: redis:latest
-    container_name: local-redis
+    container_name: redis
     ports:
       - "6379:6379"
     command: [ "redis-server", "--requirepass", "1234" ]
+
+  app:
+    build: ./
+    container_name: spring-boot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - redis

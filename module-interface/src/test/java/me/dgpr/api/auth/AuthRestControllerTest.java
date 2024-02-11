@@ -9,7 +9,6 @@ import me.dgpr.api.auth.dto.LoginRequest;
 import me.dgpr.api.auth.dto.LoginResponse;
 import me.dgpr.api.auth.service.AuthService;
 import me.dgpr.api.support.AbstractMockMvcTest;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -73,7 +72,10 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
     }
 
     @CsvSource({
-            "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc1MzQzNzAsImV4cCI6MTcwNzYyMDc3MH0.o33mAGVvM524KmGdDLGT5s_sAqTOUupWyI1B5MMJ42g"
+            "eyJhbGciOiJIUzI1NiJ9."
+                    + "eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iL"
+                    + "CJpYXQiOjE3MDc1MzQzNzAsImV4cCI6MTcwNzYyMDc3MH0."
+                    + "o33mAGVvM524KmGdDLGT5s_sAqTOUupWyI1B5MMJ42g"
     })
     @ParameterizedTest(name = "Authorization: {0}")
     @WithMockUser
@@ -88,9 +90,8 @@ class AuthRestControllerTest extends AbstractMockMvcTest {
     }
 
     @Test
-    @DisplayName("사장님 로그인 실패 - 토큰 없음")
     @WithMockUser
-    void 사장님_로그인_실패() throws Exception {
+    void 사장님_로그아웃_실패() throws Exception {
         //When & Then
         mockMvc.perform(
                         post("/v1/logout")

@@ -1,7 +1,7 @@
 ### 가게 등록 - 성공
 POST http://localhost:8080/v1/stores
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2Njk4NTMsImV4cCI6MTcwODUzMzg1M30.rZ031qNQy7tNSflR06NROdxBLu_ipkc_oM6HbntlqBU
 # fill in token to Authorization header
 
 {
@@ -12,7 +12,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJp
 ### 가게 등록 - 실패
 POST http://localhost:8080/v1/stores
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDMwOTQsImV4cCI6MTcwODUwNzA5NH0.JarWSBPKMV3EV4bCEhCyCE-kXlK-LWZ3W9tR1DwR0TY
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2Njk2MzQsImV4cCI6MTcwODUzMzYzNH0.dd5Qj4C3gTmaXeqOcaY2mOWte6l6aXGh5Y55XkfEsYo
 # fill in token to Authorization header
 
 {

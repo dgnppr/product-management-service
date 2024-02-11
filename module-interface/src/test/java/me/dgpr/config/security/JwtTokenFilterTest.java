@@ -104,9 +104,9 @@ class JwtTokenFilterTest {
         String token = "token";
         Manager manager = mock(Manager.class);
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        FilterChain chain = mock(FilterChain.class);
+        final HttpServletRequest request = mock(HttpServletRequest.class);
+        final HttpServletResponse response = mock(HttpServletResponse.class);
+        final FilterChain chain = mock(FilterChain.class);
 
         when(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .thenReturn(token);
@@ -143,9 +143,9 @@ class JwtTokenFilterTest {
         String token = "token";
         Manager manager = mock(Manager.class);
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        FilterChain chain = mock(FilterChain.class);
+        final HttpServletRequest request = mock(HttpServletRequest.class);
+        final HttpServletResponse response = mock(HttpServletResponse.class);
+        final FilterChain chain = mock(FilterChain.class);
 
         when(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .thenReturn(token);

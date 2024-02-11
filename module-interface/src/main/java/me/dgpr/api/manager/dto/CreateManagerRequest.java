@@ -7,7 +7,7 @@ import me.dgpr.domains.manager.usecase.CreateManagerUseCase;
 
 public record CreateManagerRequest(
         @NotEmpty(message = "휴대폰 번호는 필수입니다.")
-        @Pattern(regexp = "^\\d{11}$", message = "휴대폰 번호는 11자리 숫자로만 입력해주세요.")
+        @Pattern(regexp = "^010\\d{8}$", message = "휴대폰 번호는 '010'으로 시작하는 11자리 숫자로만 입력해주세요.")
         String phoneNumber,
 
         @NotEmpty(message = "비밀번호는 필수입니다.")

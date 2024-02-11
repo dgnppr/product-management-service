@@ -22,9 +22,13 @@ class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     }
 
     @Override
-    public void commence(HttpServletRequest req, HttpServletResponse res,
-            AuthenticationException authException) throws IOException, ServletException {
-        ApiResponse<Object> body = ApiResponse.of(
+    public void commence(
+            HttpServletRequest req,
+            HttpServletResponse res,
+            AuthenticationException authException
+    ) throws IOException, ServletException {
+
+        final ApiResponse<Object> body = ApiResponse.of(
                 HttpStatus.UNAUTHORIZED.value(),
                 HttpStatus.UNAUTHORIZED.getReasonPhrase(),
                 null
