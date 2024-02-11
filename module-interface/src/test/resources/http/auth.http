@@ -19,7 +19,7 @@ Content-Type: application/json
 ### 사장님 로그아웃 - 성공
 POST http://localhost:8080/v1/logout
 Content-Type: application/json
-Authorization: eeyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2MzY1MTEsImV4cCI6MTcwODUwMDUxMX0.0jCQf8OS8lntlO3U3cmFuwPfoBeRyjVc9J4BNXGCUSM
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDI4ODAsImV4cCI6MTcwODUwNjg4MH0.JpgMmIFNmwONWTiDbHobSQRqdl-ZI--tWfAP4C4Fz8A
 # fill in token to Authorization header
 
 {
@@ -28,6 +28,7 @@ Authorization: eeyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJ
 ### 사장님 로그아웃 - 실패 (UNAUTHORIZED)
 POST http://localhost:8080/v1/logout
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoiYXV0aGVudGljYXRpb24iLCJpYXQiOjE3MDc2NDI4ODAsImV4cCI6MTcwODUwNjg4MH0.JpgMmIFNmwONWTiDbHobSQRqdl-ZI--tWfAP4C4Fz8A
 
 {
 }
