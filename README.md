@@ -75,7 +75,7 @@
 
 <br>
 
-> ddl 파일은 `ddl` 디렉토리에 위치
+> ddl 파일은 [`ddl` 디렉토리](./ddl)에 위치
 
 ![Screenshot 2024-02-12 at 03 32 49](https://github.com/dgnppr/product-management-service/assets/89398909/e0529e47-f9b6-416b-b5fd-6bc6f75ded1d)
 
@@ -95,6 +95,8 @@
 
 개념적으로 위 모델링을 사용했고, **운영 및 개발 편의성을 위해 물리적으로 외래키를 사용하지 않았다.**
 트랜잭션을 통해 데이터 정합을 보장하는 방식을 선택했다.
+
+또한 삭제는 소프트 삭제를 사용했다. `deleted_at` 컬럼을 추가하여 삭제된 데이터를 조회하지 않도록 했다.
 
 <br><br>
 
@@ -141,6 +143,22 @@
     - 403: 권한 오류
     - 404: 리소스 없음
     - 500: 서버 오류
+
+<br>
+
+**HTTP 응답 메시지 템플릿**
+
+```http response
+```http response
+HTTP/1.1 status message
+{
+  "meta": {
+    "code": number,
+    "message": string
+  },
+  "data": object
+}
+```
 
 <br><br>
 
